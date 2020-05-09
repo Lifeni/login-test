@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register</title>
+        <link rel="stylesheet" href="../static/css/index.css">
+    </head>
+
+    <body>
+        <h1>Register</h1>
+        <form action="" method="post">
+            <label for="email">
+                Email:
+                <input type="email" name="email" id="email" autocomplete="off" required>
+            </label>
+            <label for="password">
+                Password:
+                <input type="password" name="password" id="password" required autocomplete="off">
+            </label>
+            <label for="captcha">
+                Captcha:
+                <input type="text" class="captcha" name="captcha" id="captcha" autocomplete="off" required>
+                <span class="captcha-text" id="captcha-text"></span>
+            </label>
+            <button class="register">Register</button>
+        </form>
+        <script src="../static/js/captcha.js"></script>
+    </body>
+
+</html>

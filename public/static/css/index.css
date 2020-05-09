@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    color: black;
+    font-family: sans-serif;
+    background-color: white;
+    transition: all .2s;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: lighter;
+}
+
+h2 {
+    padding: 18px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: lighter;
+}
+
+nav {
+    width: 400px;
+    max-width: 100%;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    width: 100%;
+    height: 64px;
+    margin: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    font-weight: lighter;
+    text-decoration: none;
+    background-color: #f4f4f4;
+    transition: all .2s;
+}
+
+a:hover {
+    background-color: #e0e0e0;
+}
+
+form {
+    position: relative;
+    width: 400px;
+    max-width: 100%;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+label {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem;
+    font-weight: lighter;
+}
+
+input {
+    position: relative;
+    width: 100%;
+    height: 64px;
+    margin: 12px 0;
+    padding: 0 18px;
+    border: solid 1px #f0f0f0;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    font-family: sans-serif;
+    font-weight: lighter;
+    background-color: #f4f4f4;
+}
+
+input.captcha {
+    width: 50%;
+}
+
+.captcha-text {
+    position: absolute;
+    right: 0;
+    bottom: 12px;
+    width: 50%;
+    height: 64px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+button {
+    width: 100%;
+    height: 64px;
+    margin: 12px;
+    border: none;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    font-family: sans-serif;
+    font-weight: lighter;
+    background-color: #f4f4f4;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+
+.login {
+    color: white;
+    background-color: #2ecc71
+}
+
+.login:hover {
+    background-color: #27ae60;
+}
+
+.register {
+    color: white;
+    background-color: #3498db;
+}
+
+.register:hover {
+    background-color: #2980b9;
+}
+
+@media screen and (max-width: 800px) {
+    body {
+        flex-direction: column;
+        justify-content: center;
+    }
+}
