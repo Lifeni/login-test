@@ -6,18 +6,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
         <link rel="stylesheet" href="../static/css/index.css">
+        <script>
+            console.log('Login');
+        </script>
     </head>
 
     <body>
-        <h1>Login</h1>
+        <div>
+            <h1>Login</h1>
+            <h2>登录测试页面</h2>
+        </div>
+
         <form action="" method="post">
             <label for="email">
                 Email:
-                <input type="email" name="" id="email" autocomplete="off" required>
+                <input type="email" name="" id="email" autocomplete="off" required placeholder="你的邮箱">
             </label>
             <label for="password">
                 Password:
-                <input type="password" name="" id="password" autocomplete="off" required>
+                <input type="password" name="" id="password" autocomplete="off" required placeholder="你的密码">
             </label>
             <button class="login">Login</button>
         </form>

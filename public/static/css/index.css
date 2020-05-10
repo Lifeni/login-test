@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,19 +15,23 @@ body {
     align-items: center;
     justify-content: space-evenly;
     color: black;
-    font-family: sans-serif;
+    font-family: 'Jost', sans-serif;
     background-color: white;
-    transition: all .2s;
+    overflow: hidden;
 }
 
 h1 {
+    width: 400px;
+    max-width: 100%;
     text-align: center;
     font-size: 4rem;
     font-weight: lighter;
 }
 
 h2 {
-    padding: 18px;
+    width: 400px;
+    max-width: 100%;
+    padding: 8px;
     text-align: center;
     font-size: 2rem;
     font-weight: lighter;
@@ -87,10 +93,10 @@ input {
     height: 64px;
     margin: 12px 0;
     padding: 0 18px;
-    border: solid 1px #f0f0f0;
+    border: solid 1px #e0e0e0;
     border-radius: 2px;
     font-size: 1.5rem;
-    font-family: sans-serif;
+    font-family: 'Jost', sans-serif;
     font-weight: lighter;
     background-color: #f4f4f4;
 }
@@ -110,6 +116,9 @@ input.captcha {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 button {
@@ -119,7 +128,7 @@ button {
     border: none;
     border-radius: 2px;
     font-size: 1.5rem;
-    font-family: sans-serif;
+    font-family: 'Jost', sans-serif;
     font-weight: lighter;
     background-color: #f4f4f4;
     cursor: pointer;
@@ -148,9 +157,75 @@ button:hover {
     background-color: #2980b9;
 }
 
+.password-tips {
+    position: absolute;
+    top: 0;
+    left: -380px;
+    z-index: 100;
+    width: 400px;
+    max-width: 100%;
+    padding: 20px 24px;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 2px;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    color: white;
+    background-color: rgba(0, 0, 0, .8);
+    transition: all .2s;
+}
+
+.password-tips::after {
+    content: '';
+    position: absolute;
+    right: -16px;
+    top: 56px;
+    z-index: 100;
+    width: 0;
+    height: 0;
+    border-left: solid 16px rgba(0, 0, 0, .8);
+    border-top: solid 16px transparent;
+    border-bottom: solid 16px transparent;
+}
+
+.register-password {
+    z-index: 10;
+}
+
+.register-password:focus+.password-tips {
+    opacity: 1;
+    visibility: visible;
+}
+
+.password-tips ul {
+    padding-left: 24px;
+}
+
 @media screen and (max-width: 800px) {
     body {
+        height: auto;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    h1 {
+        margin-top: 96px;
+    }
+
+    h2 {
+        margin-bottom: 48px
+    }
+
+    .password-tips {
+        top: -208px;
+        left: 0;
+        width: 100%;
+    }
+
+    .password-tips::after {
+        content: '';
+        visibility: hidden;
     }
 }
