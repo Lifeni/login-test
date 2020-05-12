@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300&display=auto");
 
 * {
     box-sizing: border-box;
@@ -9,15 +9,26 @@
 body {
     position: relative;
     width: 100%;
+}
+
+.container {
+    position: relative;
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     color: black;
-    font-family: 'Jost', sans-serif;
+    font-family: "Jost", sans-serif;
     background-color: white;
     overflow: hidden;
+}
+
+.container::before,
+.container::after {
+    content: "";
+    display: block;
 }
 
 h1 {
@@ -60,7 +71,7 @@ a {
     font-weight: lighter;
     text-decoration: none;
     background-color: #f4f4f4;
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 a:hover {
@@ -96,13 +107,18 @@ input {
     border: solid 1px #e0e0e0;
     border-radius: 2px;
     font-size: 1.5rem;
-    font-family: 'Jost', sans-serif;
+    font-family: "Jost", sans-serif;
     font-weight: lighter;
     background-color: #f4f4f4;
 }
 
 input.captcha {
     width: 50%;
+}
+
+input.captcha:disabled,
+input.captcha:disabled + .captcha-text {
+    cursor: not-allowed;
 }
 
 .captcha-text {
@@ -119,6 +135,16 @@ input.captcha {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.register-password {
+    z-index: 10;
+}
+
+input:focus ~ .tips {
+    opacity: 1;
+    visibility: visible;
 }
 
 button {
@@ -128,20 +154,24 @@ button {
     border: none;
     border-radius: 2px;
     font-size: 1.5rem;
-    font-family: 'Jost', sans-serif;
+    font-family: "Jost", sans-serif;
     font-weight: lighter;
     background-color: #f4f4f4;
     cursor: pointer;
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 button:hover {
     background-color: #e0e0e0;
 }
 
+button:disabled {
+    cursor: not-allowed;
+}
+
 .login {
     color: white;
-    background-color: #2ecc71
+    background-color: #2ecc71;
 }
 
 .login:hover {
@@ -157,52 +187,67 @@ button:hover {
     background-color: #2980b9;
 }
 
-.password-tips {
+button.error,
+button.error:hover {
+    background-color: #e74c3c;
+}
+
+.tips {
     position: absolute;
-    top: 0;
+    top: 8px;
     left: -380px;
     z-index: 100;
     width: 400px;
     max-width: 100%;
-    padding: 20px 24px;
+    padding: 18px 24px;
     opacity: 0;
     visibility: hidden;
     border-radius: 2px;
     font-size: 1.25rem;
     line-height: 2rem;
     color: white;
-    background-color: rgba(0, 0, 0, .8);
-    transition: all .2s;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: all 0.2s;
 }
 
-.password-tips::after {
-    content: '';
+.tips::after {
+    content: "";
     position: absolute;
     right: -16px;
-    top: 56px;
+    top: 48px;
     z-index: 100;
     width: 0;
     height: 0;
-    border-left: solid 16px rgba(0, 0, 0, .8);
+    border-left: solid 16px rgba(0, 0, 0, 0.8);
     border-top: solid 16px transparent;
     border-bottom: solid 16px transparent;
 }
 
-.register-password {
-    z-index: 10;
-}
-
-.register-password:focus+.password-tips {
-    opacity: 1;
-    visibility: visible;
-}
-
-.password-tips ul {
+.tips ul {
     padding-left: 24px;
 }
 
+span.error {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+span.error::before {
+    content: "❌ ";
+}
+
+span.error:empty {
+    content: "";
+    display: none;
+}
+
+.hide {
+    display: none;
+}
+
 @media screen and (max-width: 800px) {
-    body {
+    .container {
         height: auto;
         flex-direction: column;
         justify-content: flex-start;
@@ -215,17 +260,19 @@ button:hover {
     }
 
     h2 {
-        margin-bottom: 48px
+        margin-bottom: 48px;
     }
 
-    .password-tips {
-        top: -208px;
+    .tips {
+        position: fixed;
+        top: 0;
         left: 0;
         width: 100%;
+        border-radius: 0;
     }
 
-    .password-tips::after {
-        content: '';
+    .tips::after {
+        content: "";
         visibility: hidden;
     }
 }

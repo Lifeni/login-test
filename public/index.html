@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Test Page</title>
-        <link rel="stylesheet" href="./static/css/index.css">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login Test</title>
+        <link rel="stylesheet" href="./static/css/index.css" />
         <script>
-            console.log('Test');
+            console.log("Test");
         </script>
     </head>
 
     <body>
-        <div>
-            <h1>Test Page</h1>
-            <h2>软件质量保证与测试</h2>
+        <div class="container" id="home">
+            <div>
+                <h1>Login Test</h1>
+                <h2>软件质量保证与测试</h2>
+            </div>
+
+            <nav>
+                <a href="./login/" class="login">Login</a>
+                <a href="./register/" class="register">Register</a>
+                <a href="./report/example.pdf" class="report">Report (PDF)</a>
+            </nav>
         </div>
-
-        <nav>
-            <a href="./login/" class="login">Login</a>
-            <a href="./register/" class="register">Register</a>
-            <a href="./report/example.pdf" class="report">Report (PDF)</a>
-        </nav>
+        <div class="container hide" id="chat">
+            <h1>Chat Page</h1>
+            <h2>Token: <span id="token"></span></h2>
+        </div>
+        <script src="./static/js/view.js"></script>
     </body>
-
 </html>

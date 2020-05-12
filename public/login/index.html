@@ -1,33 +1,52 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Login</title>
-        <link rel="stylesheet" href="../static/css/index.css">
+        <link rel="stylesheet" href="../static/css/index.css" />
         <script>
-            console.log('Login');
+            console.log("Login");
         </script>
     </head>
 
-    <body>
+    <body class="container">
         <div>
             <h1>Login</h1>
             <h2>登录测试页面</h2>
         </div>
 
-        <form action="" method="post">
-            <label for="email">
+        <form>
+            <label>
                 Email:
-                <input type="email" name="" id="email" autocomplete="off" required placeholder="你的邮箱">
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    autocomplete="off"
+                    required
+                    placeholder="你的邮箱"
+                />
+                <span class="error"></span>
             </label>
-            <label for="password">
+            <label>
                 Password:
-                <input type="password" name="" id="password" autocomplete="off" required placeholder="你的密码">
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    autocomplete="off"
+                    required
+                    placeholder="你的密码"
+                    minlength="8"
+                    maxlength="16"
+                />
+                <span class="error"></span>
             </label>
-            <button class="login">Login</button>
+            <button type="submit" class="login" id="submit" name="login">
+                Login
+            </button>
         </form>
+        <script src="../static/js/form.js"></script>
     </body>
-
 </html>
