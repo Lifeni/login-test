@@ -4,8 +4,8 @@
   "description": "注册与登录测试。",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "concurrently \"node app.js\" \"node ./server/模拟后端.js\"",
+    "dev": "concurrently \"nodemon app.js\" \"nodemon ./server/模拟后端.js\""
   },
   "keywords": [],
   "author": "",
@@ -13,8 +13,11 @@
   "dependencies": {
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "http-server": "^0.12.3",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.3",
     "open": "^7.0.3"
   }
