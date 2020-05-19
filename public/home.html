@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Test</title>
+        <link rel="stylesheet" href="./static/css/home.css" />
+        <!-- <script src="./static/js/状态判断.js" type="module"></script> -->
+    </head>
+
+    <body>
+        <div class="container">
+            <aside>
+                <h1>Test Page</h1>
+                <nav>
+                    <a class="nav-link this-page" id="link-home" href="#/"
+                        >Home</a
+                    >
+                    <a class="nav-link" href="#/profile" id="link-profile"
+                        >Profile</a
+                    >
+                </nav>
+                <button id="signout" class="signout">Sign out</button>
+            </aside>
+            <main class="home" id="page-home">
+                <img
+                    src="https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp"
+                    alt="Avatar"
+                    class="avatar"
+                />
+                <h1 id="home-name">Your name</h1>
+                <h2 id="home-description">Welcome to the Test Page</h2>
+            </main>
+            <main class="profile hide" id="page-profile">
+                <div class="top-bar">
+                    <h1>Profile</h1>
+                </div>
+                <form>
+                    <fieldset id="user-email">
+                        <legend>你的邮箱</legend>
+                        <div class="field">
+                            <div>
+                                <p class="big" id="email-status"></p>
+                                <p id="email"></p>
+                            </div>
+                            <div>
+                                <button id="check-email" class="blue">
+                                    发送验证链接
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <form>
+                    <fieldset id="user-profile" disabled>
+                        <legend>你的信息</legend>
+                        <div class="field">
+                            <div>
+                                <label>
+                                    Name:
+                                    <input
+                                        type="text"
+                                        name="user-name"
+                                        id="user-name"
+                                        autocomplete="off"
+                                        maxlength="16"
+                                    />
+                                </label>
+                                <label>
+                                    Description:
+                                    <textarea
+                                        type="text"
+                                        name="user-description"
+                                        id="user-description"
+                                    ></textarea>
+                                </label>
+                                <button
+                                    type="submit"
+                                    class="green"
+                                    id="change-profile"
+                                >
+                                    保存修改
+                                </button>
+                            </div>
+                            <div>
+                                <label>
+                                    Avatar:
+                                    <input
+                                        type="file"
+                                        name="user-avatar"
+                                        id="user-avatar"
+                                    />
+                                    <button class="upload yellow" id="upload">
+                                        Upload
+                                    </button>
+                                    <img
+                                        src="https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp"
+                                        alt="头像预览"
+                                        class="avatar-preview"
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <form>
+                    <fieldset id="user-account" disabled>
+                        <legend>账号相关</legend>
+                        <div class="field">
+                            <div>
+                                <label>
+                                    Old password:
+                                    <input
+                                        type="password"
+                                        name="old-password"
+                                        id="old-password"
+                                        placeholder="旧的密码"
+                                        autocomplete="off"
+                                        required
+                                    />
+                                </label>
+                                <label>
+                                    New Password:
+                                    <input
+                                        type="password"
+                                        name="new-password"
+                                        id="new-password"
+                                        placeholder="新的密码"
+                                        autocomplete="off"
+                                        required
+                                    />
+                                </label>
+                                <button
+                                    type="submit"
+                                    class="purple"
+                                    id="change-password"
+                                >
+                                    修改密码
+                                </button>
+                            </div>
+                            <div>
+                                <label>
+                                    Delete account:
+                                    <button id="delete-account" class="red">
+                                        删除账号
+                                    </button>
+                                </label>
+                                <p class="small">
+                                    这将删除你在这个网站上的所有信息。
+                                    删除账号的操作
+                                    <span class="strong">不可撤销</span>
+                                    ！请谨慎操作。
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </main>
+        </div>
+        <div class="loading" id="loading">Loading ...</div>
+        <script src="../static/js/主页.js"></script>
+    </body>
+</html>

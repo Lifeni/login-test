@@ -43,15 +43,22 @@ function 检查令牌是否有效(token) {
 }
 
 function 跳转已登录页面() {
-    if (window.location.pathname !== '/home/') {
-        window.location.href = '/home';
+    if (!window.location.href.includes('token')) {
+        window.location.href = `/?token=${token}`;
     }
     console.log('进入已登录页面');
+    setTimeout(() => {
+        document.querySelector('#loading').classList.add('hide');
+    }, 200);
 }
 
 function 跳转未登录页面() {
-    if (window.location.pathname === '/home/') {
-        window.location.href = '/';
-    }
+    // if (window.location.pathname === '/home/') {
+    //     window.location.href = '/';
+    // }
     console.log('进入未登录页面');
+    document.querySelector('#loading').classList.add('hide');
+    // setTimeout(() => {
+    //
+    // }, 200);
 }

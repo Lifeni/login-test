@@ -1,4 +1,18 @@
 [
     { "description": "仅用于测试使用" },
-    { "email": "123@test.com", "password": "bZ0BqUucPf1kZOxbl9MnOQ==" }
+    {
+        "id": "1589861146",
+        "email": "123@test.com",
+        "password": "bZ0BqUucPf1kZOxbl9MnOQ==",
+        "verified": false,
+        "name": "123",
+        "description": "are you ok?",
+        "avatar": "https://file.website/id/avatar.webp"
+    },
+    {
+        "id": "1589861106",
+        "email": "666@6.com",
+        "password": "n0UJbBMPqCUsuUkjuR0R6A==",
+        "verified": false
+    }
 ]

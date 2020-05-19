@@ -1,0 +1,431 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300&display=auto');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+    font-family: 'Jost', sans-serif;
+    background-color: white;
+    overflow: hidden;
+}
+
+button {
+    width: 100%;
+    height: 64px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: lighter;
+    background-color: #f4f4f4;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+
+button.red {
+    color: white;
+    background-color: #e74c3c;
+}
+
+button.red:hover {
+    background-color: #c0392b;
+}
+
+button.orange {
+    color: white;
+    background-color: #e67e22;
+}
+
+button.orange:hover {
+    background-color: #d35400;
+}
+
+button.yellow {
+    color: white;
+    background-color: #f1c40f;
+}
+
+button.yellow:hover {
+    background-color: #f39c12;
+}
+
+button.blue {
+    color: white;
+    background-color: #3498db;
+}
+
+button.blue:hover {
+    background-color: #2980b9;
+}
+
+button.cyan {
+    color: white;
+    background-color: #1abc9c;
+}
+
+button.cyan:hover {
+    background-color: #16a085;
+}
+
+button.purple {
+    color: white;
+    background-color: #9b59b6;
+}
+
+button.purple:hover {
+    background-color: #8e44ad;
+}
+
+button.green {
+    color: white;
+    background-color: #2ecc71;
+}
+
+button.green:hover {
+    background-color: #27ae60;
+}
+
+a {
+    width: 100%;
+    height: 64px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    font-weight: lighter;
+    text-decoration: none;
+    background-color: #f4f4f4;
+    transition: all 0.2s;
+}
+
+a:hover {
+    background-color: #e0e0e0;
+}
+
+h1 {
+    padding: 24px 36px;
+    font-size: 2rem;
+    font-weight: lighter;
+}
+
+h2 {
+    padding: 0 36px;
+    font-size: 1.5rem;
+    font-weight: lighter;
+}
+
+aside {
+    position: relative;
+    width: 360px;
+    padding: 24px 36px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    background-color: #34495e;
+}
+
+aside nav {
+    position: relative;
+    width: 100%;
+}
+
+aside a,
+aside button {
+    color: white;
+    background-color: transparent;
+}
+
+aside a:hover,
+aside button:hover,
+aside a.this-page {
+    background-color: #2c3e50;
+}
+
+main {
+    position: relative;
+    width: calc(100% - 360px);
+    height: 100%;
+    padding: 24px 12px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: all 0.4s;
+}
+
+main.hide {
+    display: none;
+}
+
+main.home {
+    align-items: center;
+    justify-content: center;
+}
+
+main.profile {
+    align-items: center;
+    justify-content: flex-start;
+}
+
+main h1 {
+    padding: 12px;
+}
+
+main img.avatar {
+    width: 300px;
+    height: 300px;
+    margin: 24px;
+    border-radius: 300px;
+    box-shadow: 0 0 24px #f0f0f0;
+}
+
+main .top-bar {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form fieldset {
+    position: relative;
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 24px 12px;
+    border: solid 1px #e0e0e0;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+fieldset legend {
+    padding: 24px;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    font-weight: lighter;
+}
+
+fieldset .email-info {
+    padding: 0 24px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+fieldset p {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+    font-weight: lighter;
+}
+
+fieldset p.big {
+    font-size: 2rem;
+}
+
+fieldset p.small {
+    font-size: 1.25rem;
+    line-height: 2rem;
+}
+
+fieldset .field {
+    position: relative;
+    width: 100%;
+    padding: 0 24px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+fieldset .field > div {
+    position: relative;
+    width: calc(50% - 18px);
+    min-width: 300px;
+    height: 100%;
+}
+
+fieldset .field .avatar-preview {
+    position: relative;
+    width: calc(100% - 72px);
+    margin: 36px;
+    border-radius: 100%;
+    border: solid 1px #e0e0e0;
+    /* box-shadow: 0 0 24px #f0f0f0; */
+}
+
+label {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem;
+    font-weight: lighter;
+}
+
+label .upload {
+    position: absolute;
+    left: 0;
+    top: 28.8px;
+    width: 100%;
+    height: 64px;
+    color: white;
+    cursor: pointer;
+}
+
+input,
+textarea {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 64px;
+    margin: 12px 0;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px #e0e0e0;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    font-family: 'Jost', sans-serif;
+    font-weight: lighter;
+    background-color: #f4f4f4;
+}
+
+input:disabled,
+textarea:disabled {
+    color: gray;
+    cursor: not-allowed;
+}
+
+textarea {
+    height: 240px;
+    padding: 18px;
+    resize: none;
+}
+
+span.strong {
+    font-weight: bold;
+}
+
+.loading {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 48px;
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    font-size: 2rem;
+    font-weight: lighter;
+    background-color: white;
+    transition: all 0.4s;
+}
+
+.loading.hide {
+    visibility: hidden;
+    opacity: 0;
+}
+
+button.hide {
+    display: none;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+@media screen and (max-width: 820px) {
+    .container {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    aside {
+        width: 100%;
+        height: auto;
+    }
+
+    main {
+        width: 100%;
+        height: auto;
+        padding: 48px 12px;
+        overflow-y: initial;
+    }
+
+    form {
+        padding: 0;
+    }
+
+    form fieldset {
+        padding: 12px;
+    }
+
+    fieldset legend {
+        padding: 12px;
+    }
+
+    fieldset .field {
+        padding: 0 12px;
+    }
+
+    fieldset .field > div {
+        width: 100%;
+    }
+
+    form button {
+        width: 100%;
+    }
+}

@@ -12,6 +12,7 @@ const keyPath = './data/jwt.key';
 const key = fs.readFileSync(keyPath).toString();
 
 const crytpo = require('crypto');
+const jwt = require('jsonwebtoken');
 
 const backend = 'http://localhost:10011';
 const root = path.resolve(__dirname, '..');
@@ -20,14 +21,20 @@ const 生成令牌 = require('./生成令牌');
 const 检测令牌有效性 = require('./检测令牌有效性');
 
 async function login(data) {
-    return await send(data, `${backend}/read`);
+    return await sendPOST(data, `${backend}/read`);
 }
 
 async function register(data) {
-    return await send(data, `${backend}/create`);
+    return await sendPOST(data, `${backend}/create`);
 }
 
-async function send(data, url) {
+async function info(token) {
+    console.log(token);
+
+    return await sendGET(token, `${backend}/get`);
+}
+
+async function sendPOST(data, url) {
     const hmac = crytpo.createHmac('md5', key);
     const email = data.data.email;
     const password = hmac.update(data.data.password).digest('base64');
@@ -59,7 +66,26 @@ async function send(data, url) {
     return result;
 }
 
+async function sendGET(token, url) {
+    const email = jwt.decode(token).email;
+    console.log(url + '?email=' + email);
+
+    let result = {};
+    await axios
+        .get(url + '?email=' + email)
+        .then((response) => {
+            // console.log(response.data);
+
+            result = response.data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    return result;
+}
+
 module.exports = {
     login: login,
     register: register,
+    info: info,
 };

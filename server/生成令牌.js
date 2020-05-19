@@ -2,7 +2,7 @@
  * JWT 生成令牌
  *
  * @param string
- * @returns string
+ * @return string
  */
 
 'use strict';

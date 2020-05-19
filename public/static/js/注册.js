@@ -101,7 +101,7 @@ async function 发送数据() {
                 }
                 submit.classList.remove('error');
                 submit.innerText = response.message;
-                window.location.href = '/home';
+                window.location.href = '/';
             } else {
                 submit.classList.add('error');
                 submit.innerText = response.message;
