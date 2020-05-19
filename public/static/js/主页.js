@@ -92,7 +92,7 @@ function setInfo(data) {
         : '未设置';
     if (data.data.verified) {
         document.querySelector('#check-email').classList.add('hide');
-        document.querySelector('#user-profile').disabled = false;
+        // document.querySelector('#user-profile').disabled = false;
     }
 }
 

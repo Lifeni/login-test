@@ -20,7 +20,7 @@ const accessKeyPath = './data/access-key.json';
 const accessKey = JSON.parse(fs.readFileSync(accessKeyPath).toString());
 
 const Core = require('@alicloud/pop-core');
-const host = 'http://localhost:10010/';
+const host = 'https://test.lifeni.life/';
 
 async function 发送邮件(payload, email) {
     var client = new Core({
