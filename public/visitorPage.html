@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Login Test</title>
         <link rel="stylesheet" href="./static/css/index.css" />
-        <script src="./static/js/状态判断.js" type="module"></script>
+        <script src="./static/js/checkToken.js" type="module"></script>
     </head>
 
     <body>
         <div class="container">
             <div>
-                <h1>Login Test</h1>
-                <h2>软件质量保证与测试</h2>
+                <h1 id="h1">Login Test</h1>
+                <h2 id="h2">软件质量保证与测试</h2>
             </div>
 
             <nav>
@@ -28,5 +28,13 @@
             </nav>
         </div>
         <div class="loading" id="loading">Loading ...</div>
+        <script>
+            if (window.ActiveXObject || 'ActiveXObject' in window) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('h1').innerText = 'Error';
+                document.getElementById('h2').innerText =
+                    '网站不兼容你的浏览器';
+            }
+        </script>
     </body>
 </html>

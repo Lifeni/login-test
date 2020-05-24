@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Test</title>
         <link rel="stylesheet" href="./static/css/home.css" />
-        <!-- <script src="./static/js/状态判断.js" type="module"></script> -->
     </head>
 
     <body>
@@ -13,10 +12,13 @@
             <aside>
                 <h1>Test Page</h1>
                 <nav>
-                    <a class="nav-link this-page" id="link-home" href="#/"
+                    <a class="nav-link home this-page" id="link-home" href="#/"
                         >Home</a
                     >
-                    <a class="nav-link" href="#/profile" id="link-profile"
+                    <a
+                        class="nav-link profile"
+                        href="#/profile"
+                        id="link-profile"
                         >Profile</a
                     >
                 </nav>
@@ -27,6 +29,7 @@
                     src="https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp"
                     alt="Avatar"
                     class="avatar"
+                    id="home-avatar"
                 />
                 <h1 id="home-name">Your name</h1>
                 <h2 id="home-description">Welcome to the Test Page</h2>
@@ -53,7 +56,9 @@
                 </form>
                 <form>
                     <fieldset id="user-profile" disabled>
-                        <legend>你的信息</legend>
+                        <legend id="profile-title">
+                            你的信息 - 需要验证邮箱才能修改
+                        </legend>
                         <div class="field">
                             <div>
                                 <label>
@@ -78,6 +83,7 @@
                                     type="submit"
                                     class="green"
                                     id="change-profile"
+                                    disabled
                                 >
                                     保存修改
                                 </button>
@@ -89,14 +95,19 @@
                                         type="file"
                                         name="user-avatar"
                                         id="user-avatar"
+                                        accept="image/gif,image/jpeg,image/jpg,image/png,image/webp"
                                     />
-                                    <button class="upload yellow" id="upload">
+                                    <button
+                                        class="upload yellow"
+                                        id="upload-avatar"
+                                    >
                                         Upload
                                     </button>
                                     <img
                                         src="https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp"
                                         alt="头像预览"
                                         class="avatar-preview"
+                                        id="avatar-preview"
                                     />
                                 </label>
                             </div>
@@ -104,7 +115,7 @@
                     </fieldset>
                 </form>
                 <form>
-                    <fieldset id="user-account" disabled>
+                    <fieldset id="user-account">
                         <legend>账号相关</legend>
                         <div class="field">
                             <div>
@@ -134,6 +145,7 @@
                                     type="submit"
                                     class="purple"
                                     id="change-password"
+                                    disabled
                                 >
                                     修改密码
                                 </button>
@@ -155,9 +167,32 @@
                         </div>
                     </fieldset>
                 </form>
+                <div class="window delete hide" id="window-delete">
+                    <form>
+                        <button class="close" id="delete-close">关闭</button>
+                        <p>输入你的邮箱以确认操作</p>
+                        <label
+                            >Email:
+                            <input
+                                type="email"
+                                name="confirm-email"
+                                id="confirm-email"
+                                required
+                            />
+                        </label>
+                        <div>
+                            <button class="red" id="delete-confirm" disabled>
+                                删除
+                            </button>
+                            <button id="delete-cancel">
+                                取消
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </main>
         </div>
         <div class="loading" id="loading">Loading ...</div>
-        <script src="../static/js/主页.js"></script>
+        <script src="../static/js/userPage.js"></script>
     </body>
 </html>

@@ -16,24 +16,23 @@ const backend = 'http://localhost:10011';
 const keyPath = './data/jwt.key';
 const key = fs.readFileSync(keyPath).toString();
 
-async function 邮箱验证结果(email, result) {
+async function changeGroup(uid) {
     let re = false;
+    let result
     await axios
-        .post(`${backend}/update`, {
-            email: email,
-            check: result,
+        .put(`${backend}/group`, {
+            uid: uid,
+            group: 1,
         })
         .then((response) => {
             result = response.data;
             console.log(result);
 
-            if (result.code === '20') {
-                re = false;
-            } else if (result.code === '210') {
-                console.log(210);
-
+            if (result.code === '520') {
                 re = true;
-            } else if (result.code === '211') {
+            } else if (result.code === '521') {
+                re = false;
+            } else {
                 re = false;
             }
         })
@@ -50,10 +49,10 @@ module.exports = async function (token) {
         console.log('body', body);
 
         result = true;
-        if (body.check && !(await 邮箱验证结果(body.email, true))) {
-            console.log(body.check, 'false');
-
-            result = false;
+        if (body.type && body.type === 'email') {
+            if (!changeGroup(body.uid)) {
+                result = false;
+            }
         }
     } catch (err) {
         result = false;

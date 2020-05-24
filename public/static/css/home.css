@@ -106,6 +106,15 @@ button.green:hover {
     background-color: #27ae60;
 }
 
+button.error {
+    color: white;
+    background-color: #e74c3c;
+}
+
+button.error:hover {
+    background-color: #c0392b;
+}
+
 a {
     width: 100%;
     height: 64px;
@@ -199,11 +208,13 @@ main h1 {
 }
 
 main img.avatar {
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
     margin: 24px;
-    border-radius: 300px;
+    border-radius: 280px;
     box-shadow: 0 0 24px #f0f0f0;
+    object-fit: cover;
+    object-position: center;
 }
 
 main .top-bar {
@@ -230,7 +241,7 @@ form fieldset {
     position: relative;
     width: 100%;
     margin-bottom: 24px;
-    padding: 24px 12px;
+    padding: 24px 18px;
     border: solid 1px #e0e0e0;
     border-radius: 2px;
     display: flex;
@@ -240,7 +251,7 @@ form fieldset {
 }
 
 fieldset legend {
-    padding: 24px;
+    padding: 18px;
     font-size: 1.5rem;
     line-height: 3rem;
     font-weight: lighter;
@@ -273,7 +284,6 @@ fieldset p.small {
 fieldset .field {
     position: relative;
     width: 100%;
-    padding: 0 24px;
     border-radius: 2px;
     display: flex;
     flex-direction: row;
@@ -284,18 +294,25 @@ fieldset .field {
 
 fieldset .field > div {
     position: relative;
-    width: calc(50% - 18px);
-    min-width: 300px;
-    height: 100%;
+    width: calc(50% - 36px);
+    min-width: 280px;
+    margin: 0 18px;
 }
 
-fieldset .field .avatar-preview {
+fieldset .avatar-preview {
     position: relative;
     width: calc(100% - 72px);
     margin: 36px;
     border-radius: 100%;
     border: solid 1px #e0e0e0;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
     /* box-shadow: 0 0 24px #f0f0f0; */
+}
+
+fieldset:disabled .avatar-preview {
+    cursor: not-allowed;
 }
 
 label {
@@ -343,13 +360,70 @@ textarea:disabled {
 }
 
 textarea {
-    height: 240px;
+    height: 232px;
     padding: 18px;
-    resize: none;
+    resize: vertical;
 }
 
 span.strong {
     font-weight: bold;
+}
+
+.window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.window.hide {
+    display: none;
+}
+
+.window form {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    padding: 24px 36px;
+    border-radius: 2px;
+    background-color: white;
+}
+
+.window div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.window div button {
+    width: calc(50% - 12px);
+}
+
+.window p {
+    margin: 24px 0 36px 0;
+    font-size: 1.5rem;
+    font-weight: lighter;
+}
+
+.window .close {
+    position: absolute;
+    top: -12px;
+    right: -72px;
+    width: 64px;
+    height: 64px;
+    border-radius: 2px;
+    color: transparent;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23FFFFFF' aria-hidden='true'%3E%3Cpath d='M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6L24 9.4z'/%3E%3C/svg%3E");
+    background-size: 36px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .loading {
@@ -383,7 +457,54 @@ button:disabled {
     cursor: not-allowed;
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 1200px) {
+    aside {
+        width: 200px;
+    }
+
+    main {
+        width: calc(100% - 200px);
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    aside {
+        width: 120px;
+        padding: 12px 24px;
+    }
+
+    aside h1 {
+        font-size: 1.75rem;
+    }
+
+    aside a,
+    aside button {
+        width: 72px;
+        height: 72px;
+        color: transparent;
+        background-size: 36px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    aside .home {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23FFFFFF' aria-hidden='true'%3E%3Cpath d='M16.61 2.21a1 1 0 0 0-1.24 0L1 13.42 2.24 15 4 13.62V26a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V13.63L29.76 15 31 13.43zM18 26h-4v-8h4zm2 0v-8a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v8H6V12.06l10-7.79 10 7.8V26z'/%3E%3C/svg%3E");
+    }
+
+    aside .profile {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23FFFFFF' aria-hidden='true'%3E%3Cpath d='M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2zm-6 24.38v-2A3.22 3.22 0 0 1 13 21h6a3.22 3.22 0 0 1 3 3.39v2a11.92 11.92 0 0 1-12 0zm14-1.46v-.61A5.21 5.21 0 0 0 19 19h-6a5.2 5.2 0 0 0-5 5.31v.59a12 12 0 1 1 16 0z'/%3E%3Cpath d='M16 7a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3z'/%3E%3C/svg%3E");
+    }
+
+    aside .signout {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23FFFFFF' aria-hidden='true'%3E%3Cpath d='M6 30h12a2.002 2.002 0 0 0 2-2v-3h-2v3H6V4h12v3h2V4a2.002 2.002 0 0 0-2-2H6a2.002 2.002 0 0 0-2 2v24a2.002 2.002 0 0 0 2 2z'/%3E%3Cpath d='M20.586 20.586L24.172 17H10v-2h14.172l-3.586-3.586L22 10l6 6-6 6-1.414-1.414z'/%3E%3C/svg%3E");
+    }
+
+    main {
+        width: calc(100% - 120px);
+    }
+}
+
+@media screen and (max-width: 860px) {
     .container {
         width: 100%;
         height: auto;
@@ -395,12 +516,35 @@ button:disabled {
 
     aside {
         width: 100%;
-        height: auto;
+        height: 72px;
+        padding: 12px;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    aside h1 {
+        font-size: 1.5rem;
+        padding: 12px;
+    }
+
+    aside a,
+    aside button {
+        width: 48px;
+        height: 48px;
+        background-size: 24px;
+        overflow: hidden;
+    }
+
+    aside nav {
+        width: auto;
+        display: flex;
+        flex-direction: row;
     }
 
     main {
         width: 100%;
         height: auto;
+        min-height: calc(100vh - 72px);
         padding: 48px 12px;
         overflow-y: initial;
     }
@@ -423,9 +567,22 @@ button:disabled {
 
     fieldset .field > div {
         width: 100%;
+        margin: 0;
+    }
+
+    fieldset .field > div:last-child {
+        margin-top: 24px;
+    }
+
+    fieldset .field p {
+        margin: 8px 0;
     }
 
     form button {
         width: 100%;
+    }
+
+    .window form {
+        padding: 12px 24px;
     }
 }

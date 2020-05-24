@@ -9,19 +9,19 @@
 
 'use strict';
 
-import { 检查 } from './格式检查.js';
+import { checkFormat } from './checkFormat.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    生成验证码();
+    getCaptcha();
     submit.disabled = true;
 });
 
 const captchaText = document.querySelector('#captcha-text');
 const captcha = document.querySelector('#captcha');
 
-captchaText.addEventListener('click', 生成验证码);
+captchaText.addEventListener('click', getCaptcha);
 
-function 生成验证码() {
+function getCaptcha() {
     const num1 = Math.round(Math.random() * 20);
     const num2 = Math.round(Math.random() * 20);
     const answer = num1 + num2;
@@ -29,11 +29,12 @@ function 生成验证码() {
     captchaText.innerText = `${num1} + ${num2} = ?`;
 
     captcha.addEventListener('input', (e) => {
+        submit.disabled = true;
         if (e.target.value === answer.toString()) {
             submit.disabled = false;
             captcha.disabled = true;
             captchaText.innerText = 'Verified';
-            captchaText.removeEventListener('click', 生成验证码);
+            captchaText.removeEventListener('click', getCaptcha);
         }
     });
 }
@@ -46,14 +47,14 @@ form.addEventListener('submit', (e) => {
 });
 
 submit.addEventListener('click', async () => {
-    检查()
+    checkFormat()
         .then((result) => {
             if (result) {
-                发送数据();
+                sendData();
             } else {
                 console.log('检查失败');
                 submit.classList.add('error');
-                submit.innerText = '格式错误';
+                submit.innerText = '输入格式错误';
             }
         })
         .catch((err) => {
@@ -64,16 +65,20 @@ submit.addEventListener('click', async () => {
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 
-email.addEventListener('input', 清除提示);
-password.addEventListener('input', 清除提示);
+email.addEventListener('input', clearTips);
+password.addEventListener('input', clearTips);
 
-function 清除提示() {
+function clearTips() {
     submit.classList.remove('error');
-    submit.disabled = false;
+    if (captchaText.innerText === 'Verified') {
+        submit.disabled = false;
+    } else {
+        submit.disabled = true;
+    }
     submit.innerText = 'Register';
 }
 
-async function 发送数据() {
+async function sendData() {
     submit.innerText = 'Connecting';
     submit.disabled = true;
 
@@ -95,16 +100,17 @@ async function 发送数据() {
         })
         .then((response) => {
             console.log('返回结果', response);
-            if (response.code === '10') {
-                if (response.token) {
-                    localStorage.setItem('token', response.token);
-                }
+            if (response.code === 110) {
+                localStorage.setItem('token', response.token);
                 submit.classList.remove('error');
-                submit.innerText = response.message;
+                submit.innerText = '注册成功';
                 window.location.href = '/';
+            } else if (response.code === 111) {
+                submit.classList.add('error');
+                submit.innerText = '账号已被注册';
             } else {
                 submit.classList.add('error');
-                submit.innerText = response.message;
+                submit.innerText = '未知错误';
             }
         });
 }

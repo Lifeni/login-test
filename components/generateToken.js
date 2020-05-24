@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken');
 const keyPath = './data/jwt.key';
 const key = fs.readFileSync(keyPath).toString();
 
-module.exports = function (email) {
-    const payload = { email: email };
+module.exports = function (uid) {
+    const payload = { uid: uid };
     return jwt.sign(payload, key, { expiresIn: '1h' });
 };

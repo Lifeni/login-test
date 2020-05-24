@@ -2,91 +2,161 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const open = require('open');
+const multer = require('multer');
+
 const app = express();
+const upload = multer();
 
 const port = 10010;
 
-const 中间层 = require('./server/中间层');
-const 检测令牌有效性 = require('./server/检测令牌有效性');
-const 发送邮箱验证 = require('./server/发送邮箱验证');
-const { response } = require('express');
+const vertifyToken = require('./components/vertifyToken');
+const forwardRequest = require('./components/forwardRequest');
+const sendEmail = require('./components/sendEmail');
+const uploadAvatar = require('./components/uploadAvatar.js');
+
+const open = require('open');
+const jwt = require('jsonwebtoken');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ extended: false }));
 
 app.get('/', (req, res) => {
     // console.log(req);
-    if (req.query.token && 检测令牌有效性(req.query.token)) {
-        res.sendFile(`${__dirname}/public/home.html`);
+    if (req.query.token && vertifyToken(req.query.token)) {
+        res.sendFile(`${__dirname}/public/userPage.html`);
     } else {
-        res.sendFile(`${__dirname}/public/index.html`);
-    }
-});
-
-app.get('/info', (req, res) => {
-    // console.log(req);
-    if (req.query.token && 检测令牌有效性(req.query.token)) {
-        中间层.info(req.query.token).then((response) => {
-            res.json({
-                code: 0,
-                data: response,
-            });
-        });
-    } else {
-        res.json({
-            code: 1,
-        });
+        res.sendFile(`${__dirname}/public/visitorPage.html`);
     }
 });
 
 app.use(express.static('./public'));
 
-app.post('/login', (req, res) => {
-    const data = {
-        header: req.headers,
-        data: req.body,
-    };
+app.get('/profile', (req, res) => {
+    // console.log(req);
+    if (req.query.token && vertifyToken(req.query.token)) {
+        forwardRequest
+            .profile('GET', jwt.decode(req.query.token).uid)
+            .then((response) => response.data)
+            .then((response) => {
+                console.log('GET Profile: ', response);
 
-    中间层.login(data).then((response) => {
+                res.json(response);
+            });
+    } else {
+        res.json({
+            code: 302,
+        });
+    }
+});
+
+app.put('/profile', (req, res) => {
+    // console.log(req);
+    console.log('profile body', req.body);
+
+    if (req.body.token && vertifyToken(req.body.token)) {
+        const data = {
+            uid: jwt.decode(req.body.token).uid,
+            name: req.body.name,
+            description: req.body.description,
+        };
+        forwardRequest
+            .profile('PUT', data)
+            .then((response) => response.data)
+            .then((response) => {
+                res.json(response);
+            });
+    } else {
+        res.json({
+            code: 322,
+        });
+    }
+});
+
+app.put('/password', (req, res) => {
+    // console.log(req);
+    if (req.body.token && vertifyToken(req.body.token)) {
+        const data = {
+            uid: jwt.decode(req.body.token).uid,
+            'old-password': req.body['old-password'],
+            'new-password': req.body['new-password'],
+        };
+        forwardRequest
+            .password(data)
+            .then((response) => response.data)
+            .then((response) => {
+                res.json(response);
+            });
+    } else {
+        res.json({
+            code: 124,
+        });
+    }
+});
+
+app.delete('/account', (req, res) => {
+    // console.log(req);
+    if (req.body.token && vertifyToken(req.body.token)) {
+        const data = {
+            uid: jwt.decode(req.body.token).uid,
+        };
+        forwardRequest
+            .account(data)
+            .then((response) => response.data)
+            .then((response) => {
+                res.json(response);
+            });
+    } else {
+        res.json({
+            code: 132,
+        });
+    }
+});
+
+app.post('/register', (req, res) => {
+    forwardRequest.register(req.body).then((response) => {
         res.json(response);
     });
 });
 
-app.post('/register', (req, res) => {
-    const data = {
-        header: req.headers,
-        data: req.body,
-    };
+app.post('/login', (req, res) => {
+    forwardRequest.login(req.body).then((response) => {
+        console.log(response);
 
-    中间层.register(data).then((response) => {
         res.json(response);
     });
 });
 
 app.post('/token', (req, res) => {
-    const data = req.body.token;
-
-    检测令牌有效性(data).then((response) => {
-        console.log('/token res', response);
-
-        res.json({
-            result: response,
-        });
+    vertifyToken(req.body.token).then((result) => {
+        console.log('/token res', result);
+        if (result) {
+            res.json({ code: 240 });
+        } else {
+            res.json({ code: 241 });
+        }
     });
 });
 
 app.post('/email', (req, res) => {
-    const data = req.body.token;
-    检测令牌有效性(data).then((response) => {
-        if (response) {
-            res.json({
-                result: 发送邮箱验证(req.body.email),
-            });
+    vertifyToken(req.body.token).then((result) => {
+        if (result && sendEmail(req.body.email, req.body.uid)) {
+            res.json({ code: 440 });
         } else {
-            res.json({
-                result: response,
-            });
+            res.json({ code: 441 });
+        }
+    });
+});
+
+app.post('/avatar', upload.single('image'), (req, res) => {
+    console.log(req.body, req.file);
+    // res.json({ code: 610 });
+    vertifyToken(req.body.token).then((result) => {
+        if (result && uploadAvatar(jwt.decode(req.body.token).uid, req.file)) {
+            console.log('upload');
+
+            res.json({ code: 610 });
+        } else {
+            res.json({ code: 611 });
         }
     });
 });

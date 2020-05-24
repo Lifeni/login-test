@@ -300,6 +300,7 @@ button.ok:hover {
 @media screen and (max-width: 820px) {
     .container {
         height: auto;
+        min-height: 100vh;
         flex-direction: column;
         justify-content: flex-start;
         overflow-x: hidden;
@@ -311,7 +312,8 @@ button.ok:hover {
     }
 
     h2 {
-        margin-bottom: 48px;
+        padding-top: 8px;
+        margin-bottom: 36px;
     }
 
     input ~ .tips {

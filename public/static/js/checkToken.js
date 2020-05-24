@@ -11,13 +11,13 @@
 const token = localStorage.getItem('token');
 if (token) {
     console.log('Token 存在', token);
-    检查令牌是否有效(token);
+    checkToken(token);
 } else {
     console.log('Token 不存在', token);
-    跳转未登录页面();
+    toVisitorPage();
 }
 
-function 检查令牌是否有效(token) {
+function checkToken(token) {
     fetch('/token', {
         method: 'POST',
         body: JSON.stringify({
@@ -32,17 +32,21 @@ function 检查令牌是否有效(token) {
             console.log(err);
         })
         .then((response) => {
-            if (response.result) {
+            if (response.code === 240) {
                 console.log('Token 可用');
-                跳转已登录页面();
-            } else {
+                toUserPage();
+            } else if (response.code === 241) {
                 console.log('Token 不可用');
-                跳转未登录页面();
+                localStorage.setItem('token', '');
+                toVisitorPage();
+            } else {
+                console.log('Token 未知');
+                toVisitorPage();
             }
         });
 }
 
-function 跳转已登录页面() {
+function toUserPage() {
     if (!window.location.href.includes('token')) {
         window.location.href = `/?token=${token}`;
     }
@@ -52,13 +56,7 @@ function 跳转已登录页面() {
     }, 200);
 }
 
-function 跳转未登录页面() {
-    // if (window.location.pathname === '/home/') {
-    //     window.location.href = '/';
-    // }
+function toVisitorPage() {
     console.log('进入未登录页面');
     document.querySelector('#loading').classList.add('hide');
-    // setTimeout(() => {
-    //
-    // }, 200);
 }

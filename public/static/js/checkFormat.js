@@ -11,7 +11,7 @@
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 
-async function 检查邮箱() {
+async function checkEmailFormat() {
     const text = email.value;
     if (!text.includes('@')) {
         console.log('邮箱格式不对');
@@ -20,7 +20,7 @@ async function 检查邮箱() {
     return true;
 }
 
-async function 检查密码() {
+async function checkPasswordFormat() {
     const text = password.value;
     const re = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.\-_*])([a-zA-Z0-9@#$%^&+=*.\-_]){3,}$/;
     if (text.length < 8 || text.length > 16) {
@@ -33,8 +33,8 @@ async function 检查密码() {
     return true;
 }
 
-export async function 检查() {
-    if ((await 检查邮箱()) && (await 检查密码())) {
+export async function checkFormat() {
+    if ((await checkEmailFormat()) && (await checkPasswordFormat())) {
         console.log('检查通过');
         return true;
     }

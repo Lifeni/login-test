@@ -20,9 +20,9 @@ const accessKeyPath = './data/access-key.json';
 const accessKey = JSON.parse(fs.readFileSync(accessKeyPath).toString());
 
 const Core = require('@alicloud/pop-core');
-const host = 'https://test.lifeni.life/';
+const host = 'http://139.9.138.39:10010/';
 
-async function 发送邮件(payload, email) {
+async function sendEmail(payload, email) {
     var client = new Core({
         accessKeyId: accessKey.id,
         accessKeySecret: accessKey.secret,
@@ -56,13 +56,14 @@ async function 发送邮件(payload, email) {
     );
 }
 
-module.exports = function (email) {
+module.exports = async function (email, uid) {
     const payload = {
         email: email,
-        check: true,
+        type: 'email',
+        uid: uid,
     };
     try {
-        发送邮件(payload, email);
+        sendEmail(payload, email);
     } catch (err) {
         return false;
     }

@@ -8,7 +8,7 @@
 
 'use strict';
 
-import { 检查 } from './格式检查.js';
+import { checkFormat } from './checkFormat.js';
 
 const form = document.querySelector('form');
 const submit = document.querySelector('#submit');
@@ -18,14 +18,14 @@ form.addEventListener('submit', (e) => {
 });
 
 submit.addEventListener('click', async () => {
-    检查()
+    checkFormat()
         .then((result) => {
             if (result) {
-                发送数据();
+                sendData();
             } else {
                 console.log('检查失败');
                 submit.classList.add('error');
-                submit.innerText = '格式错误';
+                submit.innerText = '输入格式错误';
             }
         })
         .catch((err) => {
@@ -36,16 +36,16 @@ submit.addEventListener('click', async () => {
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 
-email.addEventListener('input', 清除提示);
-password.addEventListener('input', 清除提示);
+email.addEventListener('input', clearTips);
+password.addEventListener('input', clearTips);
 
-function 清除提示() {
+function clearTips() {
     submit.classList.remove('error');
     submit.disabled = false;
     submit.innerText = 'Login';
 }
 
-async function 发送数据() {
+async function sendData() {
     submit.innerText = 'Connecting';
     submit.disabled = true;
 
@@ -67,16 +67,20 @@ async function 发送数据() {
         })
         .then((response) => {
             console.log('返回结果', response);
-            if (response.code === '010') {
-                if (response.token) {
-                    localStorage.setItem('token', response.token);
-                }
+            if (response.code === 100) {
+                localStorage.setItem('token', response.token);
                 submit.classList.remove('error');
-                submit.innerText = response.message;
+                submit.innerText = '登录成功';
                 window.location.href = '/';
+            } else if (response.code === 101) {
+                submit.classList.add('error');
+                submit.innerText = '密码错误';
+            } else if (response.code === 102) {
+                submit.classList.add('error');
+                submit.innerText = '账号不存在';
             } else {
                 submit.classList.add('error');
-                submit.innerText = response.message;
+                submit.innerText = '未知错误';
             }
         });
 }
