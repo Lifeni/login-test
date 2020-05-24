@@ -11,21 +11,15 @@
    npm -v
    ```
 
-2. 替换国内淘宝镜像源（如果你是第一次用 Node）：
+2. 在本项目文件夹，按住 `shift` 右键打开 PowerShell，输入：
 
    ```bash
-   npm config set registry https://registry.npm.taobao.org
-   ```
-
-3. 在本项目文件夹，按住 `shift` 右键打开 PowerShell，输入：
-
-   ```bash
-   npm install
+   npm install --registry https://registry.npm.taobao.org
    ```
 
    等一会，如果没有出现 `ERR` 就行。
 
-4. 输入下面命令，会自动打开浏览器：
+3. 输入下面命令，打开 http://localhost:10010 即可：
 
    ```bash
    npm start
