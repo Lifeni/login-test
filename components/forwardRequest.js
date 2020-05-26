@@ -44,8 +44,6 @@ async function register(data) {
         .post(`${backend}/register`, data)
         .then((response) => response.data)
         .then((response) => {
-            console.log('register data', response);
-
             if (response.code === 110) {
                 response.token = generateToken(response.uid);
             }
@@ -69,7 +67,6 @@ async function profile(method, data) {
 }
 
 async function password(data) {
-    console.log('forward password', data);
     data['old-password'] = crytpo
         .createHmac('md5', key)
         .update(data['old-password'])

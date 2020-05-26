@@ -1,20 +1,12 @@
 [
     { "description": "仅用于测试使用" },
     {
-        "uid": "1590119233868",
-        "email": "2072945536@qq.com",
-        "password": "3Pr75bthgRxFW1hQT9/CUQ==",
-        "description": "JUST FOR TEST.",
-        "group": 1,
-        "avatar": "https://login-test.oss-cn-beijing.aliyuncs.com/avatar_1590119233868.png"
-    },
-    {
         "uid": "1590283415951",
         "email": "123@test.com",
         "password": "bZ0BqUucPf1kZOxbl9MnOQ==",
-        "name": "",
-        "description": "",
-        "avatar": "",
-        "group": 0
+        "name": "Your name.",
+        "description": "Your description.",
+        "avatar": "https://login-test.oss-cn-beijing.aliyuncs.com/avatar_1590119233868.png",
+        "group": 1
     }
 ]

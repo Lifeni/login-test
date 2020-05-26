@@ -16,11 +16,21 @@ const jwt = require('jsonwebtoken');
 const jwtKeyPath = './data/jwt.key';
 const jwtKey = fs.readFileSync(jwtKeyPath).toString();
 
-const accessKeyPath = './data/access-key.json';
-const accessKey = JSON.parse(fs.readFileSync(accessKeyPath).toString());
+let accessKeyPath;
+let accessKey;
+
+try {
+    accessKeyPath = './data/access-key.json';
+    accessKey = JSON.parse(fs.readFileSync(accessKeyPath).toString());
+} catch (error) {
+    console.log(
+        '请把阿里云的 AccessKey 填入 /data/access-key.json，然后修改本文件中的相关信息。',
+        error
+    );
+}
 
 const Core = require('@alicloud/pop-core');
-const host = 'http://139.9.138.39:10010/';
+const host = 'https://test.lifeni.life/';
 
 async function sendEmail(payload, email) {
     var client = new Core({
@@ -48,7 +58,7 @@ async function sendEmail(payload, email) {
 
     client.request('SingleSendMail', params, requestOption).then(
         (result) => {
-            console.log(JSON.stringify(result));
+            console.log('邮件发送情况：', JSON.stringify(result));
         },
         (ex) => {
             console.log(ex);

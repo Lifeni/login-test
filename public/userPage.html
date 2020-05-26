@@ -26,7 +26,7 @@
             </aside>
             <main class="home" id="page-home">
                 <img
-                    src="https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp"
+                    src=""
                     alt="Avatar"
                     class="avatar"
                     id="home-avatar"
@@ -57,7 +57,7 @@
                 <form>
                     <fieldset id="user-profile" disabled>
                         <legend id="profile-title">
-                            你的信息 - 需要验证邮箱才能修改
+                            你的信息
                         </legend>
                         <div class="field">
                             <div>
@@ -68,8 +68,13 @@
                                         name="user-name"
                                         id="user-name"
                                         autocomplete="off"
-                                        maxlength="16"
+                                        maxlength="12"
                                     />
+                                    <div class="tips">
+                                        <p>
+                                            限制字数：12 个字
+                                        </p>
+                                    </div>
                                 </label>
                                 <label>
                                     Description:
@@ -77,7 +82,13 @@
                                         type="text"
                                         name="user-description"
                                         id="user-description"
+                                        maxlength="60"
                                     ></textarea>
+                                    <div class="tips" id="description-tips">
+                                        <p>
+                                            限制字数：60 个字
+                                        </p>
+                                    </div>
                                 </label>
                                 <button
                                     type="submit"
@@ -89,7 +100,7 @@
                                 </button>
                             </div>
                             <div>
-                                <label>
+                                <label for="user-avatar">
                                     Avatar:
                                     <input
                                         type="file"
@@ -97,11 +108,8 @@
                                         id="user-avatar"
                                         accept="image/gif,image/jpeg,image/jpg,image/png,image/webp"
                                     />
-                                    <button
-                                        class="upload yellow"
-                                        id="upload-avatar"
-                                    >
-                                        Upload
+                                    <button class="upload" id="upload-avatar">
+                                        .jpg .png .webp .gif &lt1MB
                                     </button>
                                     <img
                                         src="https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp"

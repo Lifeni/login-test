@@ -26,14 +26,14 @@ function getCaptcha() {
     const num2 = Math.round(Math.random() * 20);
     const answer = num1 + num2;
 
-    captchaText.innerText = `${num1} + ${num2} = ?`;
+    captchaText.textContent = `${num1} + ${num2} = ?`;
 
     captcha.addEventListener('input', (e) => {
         submit.disabled = true;
         if (e.target.value === answer.toString()) {
             submit.disabled = false;
             captcha.disabled = true;
-            captchaText.innerText = 'Verified';
+            captchaText.textContent = 'Verified';
             captchaText.removeEventListener('click', getCaptcha);
         }
     });
@@ -54,7 +54,7 @@ submit.addEventListener('click', async () => {
             } else {
                 console.log('检查失败');
                 submit.classList.add('error');
-                submit.innerText = '输入格式错误';
+                submit.textContent = '输入格式错误';
             }
         })
         .catch((err) => {
@@ -70,16 +70,16 @@ password.addEventListener('input', clearTips);
 
 function clearTips() {
     submit.classList.remove('error');
-    if (captchaText.innerText === 'Verified') {
+    if (captchaText.textContent === 'Verified') {
         submit.disabled = false;
     } else {
         submit.disabled = true;
     }
-    submit.innerText = 'Register';
+    submit.textContent = 'Register';
 }
 
 async function sendData() {
-    submit.innerText = 'Connecting';
+    submit.textContent = 'Connecting';
     submit.disabled = true;
 
     const data = {
@@ -103,14 +103,14 @@ async function sendData() {
             if (response.code === 110) {
                 localStorage.setItem('token', response.token);
                 submit.classList.remove('error');
-                submit.innerText = '注册成功';
+                submit.textContent = '注册成功';
                 window.location.href = '/';
             } else if (response.code === 111) {
                 submit.classList.add('error');
-                submit.innerText = '账号已被注册';
+                submit.textContent = '账号已被注册';
             } else {
                 submit.classList.add('error');
-                submit.innerText = '未知错误';
+                submit.textContent = '未知错误';
             }
         });
 }

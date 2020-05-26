@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const signout = document.querySelector('#signout');
 signout.addEventListener('click', () => {
     localStorage.clear();
-    signout.innerText = '已退出';
+    signout.textContent = '已退出';
     setTimeout(() => {
         window.location.reload();
     }, 1000);
@@ -50,6 +50,9 @@ function checkHash() {
     document.querySelector('#avatar-preview').style.height = `${
         document.querySelector('#avatar-preview').getBoundingClientRect().width
     }px`;
+    document.querySelectorAll('.tips').forEach((e) => {
+        e.style.top = `-${e.getBoundingClientRect().height - 36}px`;
+    });
 }
 
 let userData;
@@ -87,26 +90,28 @@ function getProfile() {
 }
 
 function setData(data) {
-    document.querySelector('#email').innerText = data.email;
+    document.querySelector('#home-avatar').src = data.avatar
+        ? data.avatar
+        : 'https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp';
+    document.querySelector('#email').textContent = data.email;
     document.querySelector('#confirm-email').placeholder = data.email;
-    document.querySelector('#email-status').innerText =
+    document.querySelector('#email-status').textContent =
         data.group === 1 ? '已验证' : '未验证';
     document.querySelector('#user-name').placeholder = data.name
         ? data.name
-        : '未设置';
-    document.querySelector('#home-name').innerText = data.name
+        : '你的名字';
+    document.querySelector('#home-name').textContent = data.name
         ? data.name
         : data.email;
-    document.querySelector('#home-description').innerText = data.description
+    document.querySelector('#home-description').textContent = data.description
         ? data.description
         : 'Welcome to the Test Page';
     document.querySelector('#user-description').placeholder = data.description
         ? data.description
-        : '未设置';
+        : '你想说的话';
     if (data.group === 1) {
         document.querySelector('#check-email').classList.add('hide');
         document.querySelector('#user-profile').disabled = false;
-        document.querySelector('#profile-title').innerText = '你的信息';
     }
     if (data.avatar) {
         document.querySelector('#home-avatar').src = data.avatar;
@@ -125,7 +130,7 @@ const checkEmail = document.querySelector('#check-email');
 checkEmail.addEventListener('click', (e) => {
     e.preventDefault();
     checkEmail.disabled = true;
-    checkEmail.innerText = '正在发送 ...';
+    checkEmail.textContent = '正在发送 ...';
     const email = document.querySelector('#email');
     console.log(userData);
 
@@ -147,13 +152,13 @@ checkEmail.addEventListener('click', (e) => {
         .then((response) => {
             if (response.code === 440) {
                 console.log('发送成功');
-                checkEmail.innerText = '发送成功';
+                checkEmail.textContent = '发送成功';
             } else if (response.code === 441) {
                 console.log('发送失败');
-                checkEmail.innerText = '发送失败';
+                checkEmail.textContent = '发送失败';
             } else {
                 console.log('发送遇到未知错误');
-                checkEmail.innerText = '未知错误';
+                checkEmail.textContent = '未知错误';
             }
         });
 });
@@ -186,15 +191,23 @@ changeProfile.addEventListener('click', (e) => {
             if (response.code === 320) {
                 console.log('修改成功');
                 e.target.classList.remove('error');
-                e.target.innerText = '修改成功';
+                e.target.textContent = '修改成功';
+                if (userName.value) {
+                    document.querySelector('#home-name').textContent =
+                        userName.value;
+                }
+                if (userDescription.value) {
+                    document.querySelector('#home-description').textContent =
+                        userDescription.value;
+                }
             } else if (response.code === 321) {
                 console.log('修改失败');
                 e.target.classList.add('error');
-                e.target.innerText = '修改失败';
+                e.target.textContent = '修改失败';
             } else {
                 console.log('修改信息遇到未知错误');
                 e.target.classList.add('error');
-                e.target.innerText = '未知错误';
+                e.target.textContent = '未知错误';
             }
         });
 });
@@ -208,8 +221,14 @@ function checkProfile() {
     } else {
         changeProfile.disabled = false;
     }
+    document.querySelector(
+        '#description-tips'
+    ).textContent = `限制字数：60 个字，已经写了 ${userDescription.value.length} 个字`;
+    document.querySelectorAll('.tips').forEach((e) => {
+        e.style.top = `-${e.getBoundingClientRect().height - 36}px`;
+    });
     changeProfile.classList.remove('error');
-    changeProfile.innerText = '保存修改';
+    changeProfile.textContent = '保存修改';
 }
 
 const userAvatar = document.querySelector('#user-avatar');
@@ -226,6 +245,9 @@ window.addEventListener('resize', () => {
     avatarPreview.style.height = `${
         avatarPreview.getBoundingClientRect().width
     }px`;
+    document.querySelectorAll('.tips').forEach((e) => {
+        e.style.top = `-${e.getBoundingClientRect().height - 36}px`;
+    });
 });
 
 function sendAvatar(e) {
@@ -242,7 +264,7 @@ function sendAvatar(e) {
         };
         if (e.target.files[0].size > 1 * 1024 * 1024) {
             uploadAvatar.classList.add('error');
-            uploadAvatar.innerText = '图片有点大，不能上传';
+            uploadAvatar.textContent = '图片有点大，不能上传';
         } else {
             const formData = new FormData();
             formData.append('image', e.target.files[0]);
@@ -259,19 +281,21 @@ function sendAvatar(e) {
                     if (response.code === 610) {
                         console.log('上传成功');
                         uploadAvatar.classList.remove('error');
-                        uploadAvatar.innerText = '上传成功';
+                        uploadAvatar.textContent = '上传成功';
+                        document.querySelector('#home-avatar').src =
+                            avatarPreview.src;
                     } else if (response.code === 611) {
                         console.log('上传失败');
                         uploadAvatar.classList.add('error');
-                        uploadAvatar.innerText = '上传失败';
+                        uploadAvatar.textContent = '上传失败';
                     } else {
                         console.log('上传图片遇到未知错误');
                         e.target.classList.add('error');
-                        e.target.innerText = '未知错误';
+                        e.target.textContent = '未知错误';
                     }
                 });
             uploadAvatar.classList.remove('error');
-            uploadAvatar.innerText = '上传成功';
+            uploadAvatar.textContent = '上传成功';
         }
     });
 }
@@ -283,7 +307,7 @@ changePassword.addEventListener('click', (e) => {
     e.preventDefault();
     if (oldPassword.value === newPassword.value) {
         e.target.classList.add('error');
-        e.target.innerText = '密码未改变';
+        e.target.textContent = '密码未改变';
     } else if (
         checkPasswordFormat(oldPassword.value) &&
         checkPasswordFormat(newPassword.value)
@@ -307,7 +331,7 @@ changePassword.addEventListener('click', (e) => {
                 if (response.code === 120) {
                     console.log('修改成功');
                     e.target.classList.remove('error');
-                    e.target.innerText = '修改成功，请重新登录';
+                    e.target.textContent = '修改成功，请重新登录';
                     setTimeout(() => {
                         localStorage.clear();
                         window.location.href = '/';
@@ -315,20 +339,20 @@ changePassword.addEventListener('click', (e) => {
                 } else if (response.code === 121) {
                     console.log('原密码错误');
                     e.target.classList.add('error');
-                    e.target.innerText = '原密码错误';
+                    e.target.textContent = '原密码错误';
                 } else if (response.code === 122) {
                     console.log('账号不存在');
                     e.target.classList.add('error');
-                    e.target.innerText = '账号不存在';
+                    e.target.textContent = '账号不存在';
                 } else {
                     console.log('修改密码遇到未知错误');
                     e.target.classList.add('error');
-                    e.target.innerText = '未知错误';
+                    e.target.textContent = '未知错误';
                 }
             });
     } else {
         e.target.classList.add('error');
-        e.target.innerText = '格式不对';
+        e.target.textContent = '格式不对';
     }
 });
 
@@ -342,7 +366,7 @@ function checkPassword() {
         changePassword.disabled = false;
     }
     changePassword.classList.remove('error');
-    changePassword.innerText = '修改密码';
+    changePassword.textContent = '修改密码';
 }
 
 function checkPasswordFormat(text) {
@@ -406,17 +430,17 @@ function sendDeleteAccount(e) {
         .then((response) => {
             if (response.code === 130) {
                 console.log('已删除');
-                e.target.innerText = '已删除';
+                e.target.textContent = '已删除';
                 setTimeout(() => {
                     localStorage.clear();
                     window.location.href = '/';
                 }, 1000);
             } else if (response.code === 131) {
                 console.log('删除失败');
-                e.target.innerText = '删除失败';
+                e.target.textContent = '删除失败';
             } else {
                 console.log('删除遇到未知错误');
-                e.target.innerText = '未知错误';
+                e.target.textContent = '未知错误';
             }
         });
 }

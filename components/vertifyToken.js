@@ -26,8 +26,6 @@ async function changeGroup(uid) {
         })
         .then((response) => {
             result = response.data;
-            console.log(result);
-
             if (result.code === '520') {
                 re = true;
             } else if (result.code === '521') {
@@ -46,8 +44,6 @@ module.exports = async function (token) {
     let result = false;
     try {
         const body = jwt.verify(token, key);
-        console.log('body', body);
-
         result = true;
         if (body.type && body.type === 'email') {
             if (!changeGroup(body.uid)) {

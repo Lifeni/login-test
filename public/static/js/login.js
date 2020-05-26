@@ -25,7 +25,7 @@ submit.addEventListener('click', async () => {
             } else {
                 console.log('检查失败');
                 submit.classList.add('error');
-                submit.innerText = '输入格式错误';
+                submit.textContent = '输入格式错误';
             }
         })
         .catch((err) => {
@@ -42,11 +42,11 @@ password.addEventListener('input', clearTips);
 function clearTips() {
     submit.classList.remove('error');
     submit.disabled = false;
-    submit.innerText = 'Login';
+    submit.textContent = 'Login';
 }
 
 async function sendData() {
-    submit.innerText = 'Connecting';
+    submit.textContent = 'Connecting';
     submit.disabled = true;
 
     const data = {
@@ -70,17 +70,17 @@ async function sendData() {
             if (response.code === 100) {
                 localStorage.setItem('token', response.token);
                 submit.classList.remove('error');
-                submit.innerText = '登录成功';
+                submit.textContent = '登录成功';
                 window.location.href = '/';
             } else if (response.code === 101) {
                 submit.classList.add('error');
-                submit.innerText = '密码错误';
+                submit.textContent = '密码错误';
             } else if (response.code === 102) {
                 submit.classList.add('error');
-                submit.innerText = '账号不存在';
+                submit.textContent = '账号不存在';
             } else {
                 submit.classList.add('error');
-                submit.innerText = '未知错误';
+                submit.textContent = '未知错误';
             }
         });
 }

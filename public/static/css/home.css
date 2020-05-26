@@ -34,6 +34,7 @@ button {
     font-size: 1.5rem;
     font-family: 'Jost', sans-serif;
     font-weight: lighter;
+    color: black;
     background-color: #f4f4f4;
     cursor: pointer;
     transition: all 0.2s;
@@ -99,20 +100,20 @@ button.purple:hover {
 
 button.green {
     color: white;
-    background-color: #2ecc71;
+    background-color: #41aa46;
 }
 
 button.green:hover {
-    background-color: #27ae60;
+    background-color: #328b36;
 }
 
 button.error {
-    color: white;
-    background-color: #e74c3c;
+    color: white !important;
+    background-color: #e74c3c !important;
 }
 
 button.error:hover {
-    background-color: #c0392b;
+    background-color: #c0392b !important;
 }
 
 a {
@@ -198,6 +199,10 @@ main.home {
     justify-content: center;
 }
 
+main.home h2 {
+    word-break: break-all;
+}
+
 main.profile {
     align-items: center;
     justify-content: flex-start;
@@ -208,10 +213,10 @@ main h1 {
 }
 
 main img.avatar {
-    width: 280px;
-    height: 280px;
+    width: 300px;
+    height: 300px;
     margin: 24px;
-    border-radius: 280px;
+    border-radius: 300px;
     box-shadow: 0 0 24px #f0f0f0;
     object-fit: cover;
     object-position: center;
@@ -274,6 +279,7 @@ fieldset p {
 
 fieldset p.big {
     font-size: 2rem;
+    line-height: 3rem;
 }
 
 fieldset p.small {
@@ -299,6 +305,13 @@ fieldset .field > div {
     margin: 0 18px;
 }
 
+fieldset .avatar-tips {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 fieldset .avatar-preview {
     position: relative;
     width: calc(100% - 72px);
@@ -308,7 +321,21 @@ fieldset .avatar-preview {
     object-fit: cover;
     object-position: center;
     cursor: pointer;
-    /* box-shadow: 0 0 24px #f0f0f0; */
+}
+
+fieldset:disabled .field::after {
+    content: '验证邮箱后可修改';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: lighter;
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 fieldset:disabled .avatar-preview {
@@ -322,6 +349,11 @@ label {
     flex-direction: column;
     font-size: 1.25rem;
     font-weight: lighter;
+    cursor: pointer;
+}
+
+label:hover .upload {
+    color: black;
 }
 
 label .upload {
@@ -330,8 +362,10 @@ label .upload {
     top: 28.8px;
     width: 100%;
     height: 64px;
-    color: white;
-    cursor: pointer;
+    border: solid 1px #e0e0e0;
+    color: #757575;
+    background-color: white;
+    transition: all 0.2s;
 }
 
 input,
@@ -455,6 +489,38 @@ button.hide {
 
 button:disabled {
     cursor: not-allowed;
+}
+
+input:focus ~ .tips,
+textarea:focus ~ .tips {
+    opacity: 1;
+    visibility: visible;
+}
+
+input ~ .tips,
+textarea ~ .tips {
+    position: absolute;
+    top: -180px;
+    left: 0;
+    z-index: 100;
+    width: 400px;
+    max-width: 100%;
+    padding: 18px 24px;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 2px;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+}
+
+input ~ .tips ul,
+textarea ~ .tips ul {
+    padding-left: 24px;
+    list-style-type: circle;
 }
 
 @media screen and (max-width: 1200px) {

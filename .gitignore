@@ -103,3 +103,4 @@ dist
 # TernJS port file
 .tern-port
 data/access-key.json
+data/db.json

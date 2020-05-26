@@ -24,13 +24,8 @@ app.post('/login', (req, res) => {
     const db = JSON.parse(fs.readFileSync(dbPath).toString());
     const email = req.body.email;
     const password = req.body.password;
-
-    console.log(email, password);
-
     let isExist = 0;
     for (const i of db) {
-        // console.log(i);
-
         if (i.email === email) {
             isExist = 1;
             if (i.password === password) {
@@ -40,7 +35,6 @@ app.post('/login', (req, res) => {
                 });
             } else {
                 res.json({ code: 101 });
-                console.log(2);
             }
             break;
         }
@@ -67,7 +61,6 @@ app.post('/register', (req, res) => {
 
     if (!isExist) {
         let newDB = db;
-        console.log(newDB);
         const uid = new Date().getTime().toString();
         newDB.push({
             uid: uid,
@@ -90,13 +83,10 @@ app.put('/group', (req, res) => {
     const db = JSON.parse(fs.readFileSync(dbPath).toString());
     const uid = req.body.uid;
     const group = req.body.group;
-    console.log(req.body);
-    
+
     let isExist = 0;
     for (const i of db) {
         if (i.uid === uid) {
-            console.log(uid);
-
             isExist = 1;
             if (i.group === group) {
                 res.json({ code: 521 });
@@ -124,12 +114,9 @@ app.put('/group', (req, res) => {
 app.get('/profile', (req, res) => {
     const db = JSON.parse(fs.readFileSync(dbPath).toString());
     const uid = req.query.uid;
-    console.log('get profile', req.query);
 
     let isExist = 0;
     for (const i of db) {
-        console.log('db', i.uid, uid);
-
         if (i.uid === uid) {
             isExist = 1;
             const data = i;
@@ -152,7 +139,6 @@ app.put('/password', (req, res) => {
     const uid = req.body.uid;
     const oldPassword = req.body['old-password'];
     const newPassword = req.body['new-password'];
-    console.log(req.body);
 
     let isExist = 0;
     for (const i of db) {
@@ -181,7 +167,6 @@ app.put('/password', (req, res) => {
 app.put('/profile', (req, res) => {
     const db = JSON.parse(fs.readFileSync(dbPath).toString());
     const uid = req.body.uid;
-    console.log(req.body);
 
     let isExist = 0;
     for (const i of db) {
@@ -215,7 +200,6 @@ app.delete('/account', (req, res) => {
 app.post('/avatar', (req, res) => {
     const db = JSON.parse(fs.readFileSync(dbPath).toString());
     const uid = req.body.uid;
-    console.log(req.body);
 
     let isExist = 0;
     for (const i of db) {

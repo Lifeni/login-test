@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ extended: false }));
 
 app.get('/', (req, res) => {
-    // console.log(req);
     if (req.query.token && vertifyToken(req.query.token)) {
         res.sendFile(`${__dirname}/public/userPage.html`);
     } else {
@@ -32,14 +31,11 @@ app.get('/', (req, res) => {
 app.use(express.static('./public'));
 
 app.get('/profile', (req, res) => {
-    // console.log(req);
     if (req.query.token && vertifyToken(req.query.token)) {
         forwardRequest
             .profile('GET', jwt.decode(req.query.token).uid)
             .then((response) => response.data)
             .then((response) => {
-                console.log('GET Profile: ', response);
-
                 res.json(response);
             });
     } else {
@@ -50,9 +46,6 @@ app.get('/profile', (req, res) => {
 });
 
 app.put('/profile', (req, res) => {
-    // console.log(req);
-    console.log('profile body', req.body);
-
     if (req.body.token && vertifyToken(req.body.token)) {
         const data = {
             uid: jwt.decode(req.body.token).uid,
@@ -73,7 +66,6 @@ app.put('/profile', (req, res) => {
 });
 
 app.put('/password', (req, res) => {
-    // console.log(req);
     if (req.body.token && vertifyToken(req.body.token)) {
         const data = {
             uid: jwt.decode(req.body.token).uid,
@@ -94,7 +86,6 @@ app.put('/password', (req, res) => {
 });
 
 app.delete('/account', (req, res) => {
-    // console.log(req);
     if (req.body.token && vertifyToken(req.body.token)) {
         const data = {
             uid: jwt.decode(req.body.token).uid,
@@ -120,15 +111,12 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
     forwardRequest.login(req.body).then((response) => {
-        console.log(response);
-
         res.json(response);
     });
 });
 
 app.post('/token', (req, res) => {
     vertifyToken(req.body.token).then((result) => {
-        console.log('/token res', result);
         if (result) {
             res.json({ code: 240 });
         } else {
@@ -148,12 +136,8 @@ app.post('/email', (req, res) => {
 });
 
 app.post('/avatar', upload.single('image'), (req, res) => {
-    console.log(req.body, req.file);
-    // res.json({ code: 610 });
     vertifyToken(req.body.token).then((result) => {
         if (result && uploadAvatar(jwt.decode(req.body.token).uid, req.file)) {
-            console.log('upload');
-
             res.json({ code: 610 });
         } else {
             res.json({ code: 611 });
@@ -164,5 +148,4 @@ app.post('/avatar', upload.single('image'), (req, res) => {
 app.listen(port, () => {
     const url = 'http://localhost:10010';
     console.log(`Test Page: ${url}`);
-    // open(url)
 });

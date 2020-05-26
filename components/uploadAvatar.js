@@ -13,15 +13,24 @@
 const fs = require('fs');
 const axios = require('axios').default;
 
-const accessKeyPath = './data/access-key.json';
-const accessKey = JSON.parse(fs.readFileSync(accessKeyPath).toString());
+let accessKeyPath;
+let accessKey;
+
+try {
+    accessKeyPath = './data/access-key.json';
+    accessKey = JSON.parse(fs.readFileSync(accessKeyPath).toString());
+} catch (error) {
+    console.log(
+        '请把阿里云的 AccessKey 填入 /data/access-key.json，然后修改本文件中的相关信息。',
+        error
+    );
+}
 
 const OSS = require('ali-oss');
 
 const backend = 'http://localhost:10011';
 
 module.exports = async function (uid, file) {
-    console.log(uid, 0);
     var client = new OSS({
         accessKeyId: accessKey.id,
         accessKeySecret: accessKey.secret,
@@ -31,17 +40,16 @@ module.exports = async function (uid, file) {
         apiVersion: '2015-11-23',
     });
     try {
-        console.log(uid, 1);
         const fileName = `avatar_${uid}.${file.mimetype.split('/')[1]}`;
         let result = await client.put(fileName, new Buffer(file.buffer));
-        console.log(result);
+        console.log('图片上传情况：', result);
         await axios
             .post(`${backend}/avatar`, {
                 uid: uid,
                 avatar: result.url,
             })
             .then((response) => {
-                console.log(response.code);
+                console.log('后端图片存入情况：', response.code);
             })
             .catch((err) => {
                 console.log(err);

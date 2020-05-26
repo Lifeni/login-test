@@ -6,11 +6,9 @@
 'use strict';
 
 const token = window.location.search.split('=')[1];
-document.querySelector('#email').innerText = JSON.parse(
+document.querySelector('#email').textContent = JSON.parse(
     window.atob(token.split('.')[1])
 ).email;
-
-console.log(token);
 
 fetch('/token', {
     method: 'POST',
@@ -30,14 +28,14 @@ fetch('/token', {
         if (response.code === 240) {
             console.log('Token 可用');
             color.classList.add('ok');
-            document.querySelector('#result').innerText = '验证通过';
+            document.querySelector('#result').textContent = '验证通过';
         } else if (response.code === 241) {
             console.log('Token 不可用');
             color.classList.add('error');
-            document.querySelector('#result').innerText = '验证不通过';
+            document.querySelector('#result').textContent = '验证不通过';
         } else {
             console.log('Token 未知');
             color.classList.add('error');
-            document.querySelector('#result').innerText = '未知错误';
+            document.querySelector('#result').textContent = '未知错误';
         }
     });

@@ -42,7 +42,7 @@ h1 {
 h2 {
     width: 400px;
     max-width: 100%;
-    padding: 16px 0;
+    padding: 8px 0;
     text-align: center;
     font-size: 2rem;
     font-weight: lighter;
@@ -233,12 +233,12 @@ a.small.right {
 a.login,
 button.login {
     color: white;
-    background-color: #2ecc71;
+    background-color: #3da743;
 }
 
 a.login:hover,
 button.login:hover {
-    background-color: #27ae60;
+    background-color: #328b36;
 }
 
 a.register,
@@ -302,18 +302,20 @@ button.ok:hover {
         height: auto;
         min-height: 100vh;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         overflow-x: hidden;
         overflow-y: auto;
     }
 
     h1 {
         margin-top: 96px;
+        font-size: 3rem;
     }
 
     h2 {
         padding-top: 8px;
         margin-bottom: 36px;
+        font-size: 1.5rem;
     }
 
     input ~ .tips {
@@ -327,5 +329,14 @@ button.ok:hover {
     input ~ .tips::after {
         content: '';
         visibility: hidden;
+    }
+
+    .email-main {
+        width: 100%;
+        padding: 48px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 }
