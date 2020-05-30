@@ -1,5 +1,6 @@
 /**
- * 中间层负责转发数据
+ * 中间层负责转发数据到后端
+ * 登录和注册部分还负责把密码进行加密
  */
 
 'use strict';
@@ -14,7 +15,7 @@ const key = fs.readFileSync(keyPath).toString();
 const crytpo = require('crypto');
 const jwt = require('jsonwebtoken');
 
-const backend = 'http://localhost:10011';
+const backend = 'http://localhost:8080/GroupWork';
 const root = path.resolve(__dirname, '..');
 
 const generateToken = require('./generateToken');
@@ -22,13 +23,17 @@ const vertifyToken = require('./vertifyToken');
 
 async function login(data) {
     const hmac = crytpo.createHmac('md5', key);
-    data.password = hmac.update(data.password).digest('base64');
     return axios
-        .post(`${backend}/login`, data)
+        .get(`${backend}/LogPersonServlet`, {
+            params: {
+                email: data.email,
+                password: hmac.update(data.password).digest('base64'),
+            },
+        })
         .then((response) => response.data)
         .then((response) => {
-            if (response.code === 100) {
-                response.token = generateToken(response.uid);
+            if (Number(response.code) === 100) {
+                response.token = generateToken(data.email);
             }
             return response;
         })
@@ -39,13 +44,18 @@ async function login(data) {
 
 async function register(data) {
     const hmac = crytpo.createHmac('md5', key);
-    data.password = hmac.update(data.password).digest('base64');
+
     return axios
-        .post(`${backend}/register`, data)
+        .get(`${backend}/RigistePersonServlet`, {
+            params: {
+                email: data.email,
+                password: hmac.update(data.password).digest('base64'),
+            },
+        })
         .then((response) => response.data)
         .then((response) => {
-            if (response.code === 110) {
-                response.token = generateToken(response.uid);
+            if (Number(response.code) === 110) {
+                response.token = generateToken(data.email);
             }
             return response;
         })
@@ -56,13 +66,27 @@ async function register(data) {
 
 async function profile(method, data) {
     if (method === 'GET') {
-        return axios.get(`${backend}/profile?uid=${data}`).catch((err) => {
-            console.log(err);
-        });
-    } else if ((method = 'PUT')) {
-        return axios.put(`${backend}/profile`, data).catch((err) => {
-            console.log(err);
-        });
+        return axios
+            .get(`${backend}/DoQueryServlet`, {
+                params: {
+                    email: data,
+                },
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else if ((method = 'POST')) {
+        return axios
+            .get(`${backend}/UpdatePerson_DescriptionServlet`, {
+                params: {
+                    email: data.email,
+                    name: data.name,
+                    description: data.description,
+                },
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 }
 
@@ -75,21 +99,29 @@ async function password(data) {
         .createHmac('md5', key)
         .update(data['new-password'])
         .digest('base64');
-    return axios.put(`${backend}/password`, data).catch((err) => {
-        console.log(err);
-    });
+    return axios
+        .get(`${backend}/UpdatePerson_PasswordServlet`, {
+            params: {
+                email: data.email,
+                oldpassword: data['old-password'],
+                newpassword: data['new-password'],
+            },
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 async function account(data) {
-    return axios.delete(`${backend}/account`, data).catch((err) => {
-        console.log(err);
-    });
-}
-
-async function avatar(data) {
-    return axios.post(`${backend}/avatar`, data).catch((err) => {
-        console.log(err);
-    });
+    return axios
+        .get(`${backend}/DeletePersonServlet`, {
+            params: {
+                email: data.email,
+            },
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 module.exports = {
@@ -98,5 +130,4 @@ module.exports = {
     profile: profile,
     password: password,
     account: account,
-    avatar: avatar,
 };

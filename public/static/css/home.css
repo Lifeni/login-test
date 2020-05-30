@@ -517,6 +517,11 @@ textarea ~ .tips {
     transition: all 0.2s;
 }
 
+.tips p {
+    font-size: 1.25rem;
+    line-height: 2rem;
+}
+
 input ~ .tips ul,
 textarea ~ .tips ul {
     padding-left: 24px;

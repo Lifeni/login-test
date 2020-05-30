@@ -1,11 +1,6 @@
 /**
  * 使用 阿里云 的 OOS 上传照片
- *
- * 1. 生成 Token
- * 2. 发送邮件
- *
- * @param string
- * @return string
+ * 之后把图片地址发给后端
  */
 
 'use strict';
@@ -28,9 +23,9 @@ try {
 
 const OSS = require('ali-oss');
 
-const backend = 'http://localhost:10011';
+const backend = 'http://localhost:8080/GroupWork';
 
-module.exports = async function (uid, file) {
+module.exports = async function (email, file) {
     var client = new OSS({
         accessKeyId: accessKey.id,
         accessKeySecret: accessKey.secret,
@@ -40,13 +35,15 @@ module.exports = async function (uid, file) {
         apiVersion: '2015-11-23',
     });
     try {
-        const fileName = `avatar_${uid}.${file.mimetype.split('/')[1]}`;
+        const fileName = `avatar_${email}.${file.mimetype.split('/')[1]}`;
         let result = await client.put(fileName, new Buffer(file.buffer));
         console.log('图片上传情况：', result);
         await axios
-            .post(`${backend}/avatar`, {
-                uid: uid,
-                avatar: result.url,
+            .get(`${backend}/UpdatePerson_AvatarServlet`, {
+                params: {
+                    email: email,
+                    avatar: result.url,
+                },
             })
             .then((response) => {
                 console.log('后端图片存入情况：', response.code);

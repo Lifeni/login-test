@@ -5,7 +5,6 @@
  * 2. 检查密码格式
  * 3. 返回格式是否正确
  *
- * @returns void
  */
 
 const email = document.querySelector('#email');

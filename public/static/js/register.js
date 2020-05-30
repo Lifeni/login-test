@@ -100,12 +100,12 @@ async function sendData() {
         })
         .then((response) => {
             console.log('返回结果', response);
-            if (response.code === 110) {
+            if (Number(response.code) === 110) {
                 localStorage.setItem('token', response.token);
                 submit.classList.remove('error');
                 submit.textContent = '注册成功';
                 window.location.href = '/';
-            } else if (response.code === 111) {
+            } else if (Number(response.code) === 111) {
                 submit.classList.add('error');
                 submit.textContent = '账号已被注册';
             } else {

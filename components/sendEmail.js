@@ -1,11 +1,6 @@
 /**
- * 使用 阿里云 的邮件服务发送验证邮件
- *
- * 1. 生成 Token
- * 2. 发送邮件
- *
- * @param string
- * @return bool
+ * 使用 阿里云 的邮件服务
+ * 生成 Token 并发送验证邮件
  */
 
 'use strict';
@@ -56,26 +51,23 @@ async function sendEmail(payload, email) {
         method: 'POST',
     };
 
-    client.request('SingleSendMail', params, requestOption).then(
+    return client.request('SingleSendMail', params, requestOption).then(
         (result) => {
             console.log('邮件发送情况：', JSON.stringify(result));
+            return true;
         },
         (ex) => {
             console.log(ex);
+            return false;
         }
     );
 }
 
-module.exports = async function (email, uid) {
+module.exports = async function (email) {
     const payload = {
         email: email,
         type: 'email',
-        uid: uid,
     };
-    try {
-        sendEmail(payload, email);
-    } catch (err) {
-        return false;
-    }
-    return true;
+
+    return sendEmail(payload, email);
 };

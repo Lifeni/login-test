@@ -25,12 +25,7 @@
                 <button id="signout" class="signout">Sign out</button>
             </aside>
             <main class="home" id="page-home">
-                <img
-                    src=""
-                    alt="Avatar"
-                    class="avatar"
-                    id="home-avatar"
-                />
+                <img src="" alt="Avatar" class="avatar" id="home-avatar" />
                 <h1 id="home-name">Your name</h1>
                 <h2 id="home-description">Welcome to the Test Page</h2>
             </main>
@@ -148,6 +143,27 @@
                                         autocomplete="off"
                                         required
                                     />
+                                    <div class="tips">
+                                        <p>密码需要满足以下规则：</p>
+                                        <ul>
+                                            <li>
+                                                <p>
+                                                    不小于 8 位，且不大于 16 位
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    需要包含数字、大小字母和符号
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    符号可以使用 @ # $ % ^ & + =
+                                                    * . - _ 中的之一
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </label>
                                 <button
                                     type="submit"

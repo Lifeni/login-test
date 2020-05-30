@@ -1,6 +1,6 @@
 /**
  * 进行邮箱的验证操作
- * 只作用于验证邮箱的页面
+ * 只作用于验证邮箱的页面 /email
  */
 
 'use strict';
@@ -25,11 +25,11 @@ fetch('/token', {
     })
     .then((response) => {
         const color = document.querySelector('#color');
-        if (response.code === 240) {
+        if (Number(response.code) === 240) {
             console.log('Token 可用');
             color.classList.add('ok');
             document.querySelector('#result').textContent = '验证通过';
-        } else if (response.code === 241) {
+        } else if (Number(response.code) === 241) {
             console.log('Token 不可用');
             color.classList.add('error');
             document.querySelector('#result').textContent = '验证不通过';

@@ -2,7 +2,7 @@
  * 网页加载后进行登录状态判断
  *
  * 1. 检查是否有 Token
- * 2. 如果有则把 Token 发送到后端进行检查
+ * 2. 如果有则把 Token 进行检查
  * 3. 根据 Token 的有无和状态进行跳转
  */
 
@@ -32,10 +32,10 @@ function checkToken(token) {
             console.log(err);
         })
         .then((response) => {
-            if (response.code === 240) {
+            if (Number(response.code) === 240) {
                 console.log('Token 可用');
                 toUserPage();
-            } else if (response.code === 241) {
+            } else if (Number(response.code) === 241) {
                 console.log('Token 不可用');
                 localStorage.setItem('token', '');
                 toVisitorPage();

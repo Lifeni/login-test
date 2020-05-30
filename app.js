@@ -1,3 +1,8 @@
+/**
+ * Node 入口文件
+ * 使用 Express 进行路由管理
+ */
+
 'use strict';
 
 const express = require('express');
@@ -14,7 +19,6 @@ const forwardRequest = require('./components/forwardRequest');
 const sendEmail = require('./components/sendEmail');
 const uploadAvatar = require('./components/uploadAvatar.js');
 
-const open = require('open');
 const jwt = require('jsonwebtoken');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,9 +37,10 @@ app.use(express.static('./public'));
 app.get('/profile', (req, res) => {
     if (req.query.token && vertifyToken(req.query.token)) {
         forwardRequest
-            .profile('GET', jwt.decode(req.query.token).uid)
+            .profile('GET', jwt.decode(req.query.token).email)
             .then((response) => response.data)
             .then((response) => {
+                response.data = response.person;
                 res.json(response);
             });
     } else {
@@ -48,12 +53,12 @@ app.get('/profile', (req, res) => {
 app.put('/profile', (req, res) => {
     if (req.body.token && vertifyToken(req.body.token)) {
         const data = {
-            uid: jwt.decode(req.body.token).uid,
+            email: jwt.decode(req.body.token).email,
             name: req.body.name,
             description: req.body.description,
         };
         forwardRequest
-            .profile('PUT', data)
+            .profile('POST', data)
             .then((response) => response.data)
             .then((response) => {
                 res.json(response);
@@ -68,7 +73,7 @@ app.put('/profile', (req, res) => {
 app.put('/password', (req, res) => {
     if (req.body.token && vertifyToken(req.body.token)) {
         const data = {
-            uid: jwt.decode(req.body.token).uid,
+            email: jwt.decode(req.body.token).email,
             'old-password': req.body['old-password'],
             'new-password': req.body['new-password'],
         };
@@ -88,7 +93,7 @@ app.put('/password', (req, res) => {
 app.delete('/account', (req, res) => {
     if (req.body.token && vertifyToken(req.body.token)) {
         const data = {
-            uid: jwt.decode(req.body.token).uid,
+            email: jwt.decode(req.body.token).email,
         };
         forwardRequest
             .account(data)
@@ -127,7 +132,7 @@ app.post('/token', (req, res) => {
 
 app.post('/email', (req, res) => {
     vertifyToken(req.body.token).then((result) => {
-        if (result && sendEmail(req.body.email, req.body.uid)) {
+        if (result && sendEmail(req.body.email)) {
             res.json({ code: 440 });
         } else {
             res.json({ code: 441 });
@@ -137,7 +142,10 @@ app.post('/email', (req, res) => {
 
 app.post('/avatar', upload.single('image'), (req, res) => {
     vertifyToken(req.body.token).then((result) => {
-        if (result && uploadAvatar(jwt.decode(req.body.token).uid, req.file)) {
+        if (
+            result &&
+            uploadAvatar(jwt.decode(req.body.token).email, req.file)
+        ) {
             res.json({ code: 610 });
         } else {
             res.json({ code: 611 });

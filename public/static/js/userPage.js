@@ -1,9 +1,12 @@
 /**
- * 主页的脚本
+ * 用户页的脚本
  *
  * 1. 注销功能
  * 2. 获取填充用户信息
  * 3. 修改用户信息
+ * 4. 修改密码
+ * 5. 删除账号
+ * 6. 其他页面处理，比如切换页面
  */
 
 'use strict';
@@ -69,10 +72,10 @@ function getProfile() {
         })
         .then((response) => {
             console.log('返回结果', response);
-            if (response.code === 300) {
+            if (Number(response.code) === 300) {
                 console.log('获取成功');
                 userData = response.data;
-            } else if (response.code === 301) {
+            } else if (Number(response.code) === 301) {
                 console.log('获取失败');
                 userData = {
                     name: 'Error',
@@ -95,8 +98,9 @@ function setData(data) {
         : 'https://lifeni.oss-cn-beijing.aliyuncs.com/login-test/default-avatar.webp';
     document.querySelector('#email').textContent = data.email;
     document.querySelector('#confirm-email').placeholder = data.email;
-    document.querySelector('#email-status').textContent =
-        data.group === 1 ? '已验证' : '未验证';
+    document.querySelector('#email-status').textContent = data.groupid
+        ? '已验证'
+        : '未验证';
     document.querySelector('#user-name').placeholder = data.name
         ? data.name
         : '你的名字';
@@ -109,7 +113,7 @@ function setData(data) {
     document.querySelector('#user-description').placeholder = data.description
         ? data.description
         : '你想说的话';
-    if (data.group === 1) {
+    if (data.groupid) {
         document.querySelector('#check-email').classList.add('hide');
         document.querySelector('#user-profile').disabled = false;
     }
@@ -139,7 +143,6 @@ checkEmail.addEventListener('click', (e) => {
         body: JSON.stringify({
             token: localStorage.getItem('token'),
             email: userData.email,
-            uid: userData.uid,
         }),
         headers: new Headers({
             'Content-Type': 'application/json',
@@ -150,10 +153,10 @@ checkEmail.addEventListener('click', (e) => {
             console.log(err);
         })
         .then((response) => {
-            if (response.code === 440) {
+            if (Number(response.code) === 440) {
                 console.log('发送成功');
                 checkEmail.textContent = '发送成功';
-            } else if (response.code === 441) {
+            } else if (Number(response.code) === 441) {
                 console.log('发送失败');
                 checkEmail.textContent = '发送失败';
             } else {
@@ -174,8 +177,10 @@ changeProfile.addEventListener('click', (e) => {
         method: 'PUT',
         body: JSON.stringify({
             token: localStorage.getItem('token'),
-            name: userName.value,
-            description: userDescription.value,
+            name: userName.value ? userName.value : userName.placeholder,
+            description: userDescription.value
+                ? userDescription.value
+                : userDescription.placeholder,
         }),
         headers: new Headers({
             'Content-Type': 'application/json',
@@ -188,7 +193,7 @@ changeProfile.addEventListener('click', (e) => {
         .then((response) => {
             console.log('profile', response);
 
-            if (response.code === 320) {
+            if (Number(response.code) === 320) {
                 console.log('修改成功');
                 e.target.classList.remove('error');
                 e.target.textContent = '修改成功';
@@ -200,7 +205,7 @@ changeProfile.addEventListener('click', (e) => {
                     document.querySelector('#home-description').textContent =
                         userDescription.value;
                 }
-            } else if (response.code === 321) {
+            } else if (Number(response.code) === 321) {
                 console.log('修改失败');
                 e.target.classList.add('error');
                 e.target.textContent = '修改失败';
@@ -265,6 +270,15 @@ function sendAvatar(e) {
         if (e.target.files[0].size > 1 * 1024 * 1024) {
             uploadAvatar.classList.add('error');
             uploadAvatar.textContent = '图片有点大，不能上传';
+        } else if (
+            !e.target.files[0].type.includes('png') &&
+            !e.target.files[0].type.includes('jpg') &&
+            !e.target.files[0].type.includes('jpeg') &&
+            !e.target.files[0].type.includes('webp') &&
+            !e.target.files[0].type.includes('gif')
+        ) {
+            uploadAvatar.classList.add('error');
+            uploadAvatar.textContent = '图片格式不对';
         } else {
             const formData = new FormData();
             formData.append('image', e.target.files[0]);
@@ -278,13 +292,13 @@ function sendAvatar(e) {
                     console.log(err);
                 })
                 .then((response) => {
-                    if (response.code === 610) {
+                    if (Number(response.code) === 610) {
                         console.log('上传成功');
                         uploadAvatar.classList.remove('error');
                         uploadAvatar.textContent = '上传成功';
                         document.querySelector('#home-avatar').src =
                             avatarPreview.src;
-                    } else if (response.code === 611) {
+                    } else if (Number(response.code) === 611) {
                         console.log('上传失败');
                         uploadAvatar.classList.add('error');
                         uploadAvatar.textContent = '上传失败';
@@ -328,7 +342,7 @@ changePassword.addEventListener('click', (e) => {
                 console.log(err);
             })
             .then((response) => {
-                if (response.code === 120) {
+                if (Number(response.code) === 120) {
                     console.log('修改成功');
                     e.target.classList.remove('error');
                     e.target.textContent = '修改成功，请重新登录';
@@ -336,11 +350,11 @@ changePassword.addEventListener('click', (e) => {
                         localStorage.clear();
                         window.location.href = '/';
                     }, 1000);
-                } else if (response.code === 121) {
+                } else if (Number(response.code) === 121) {
                     console.log('原密码错误');
                     e.target.classList.add('error');
                     e.target.textContent = '原密码错误';
-                } else if (response.code === 122) {
+                } else if (Number(response.code) === 122) {
                     console.log('账号不存在');
                     e.target.classList.add('error');
                     e.target.textContent = '账号不存在';
@@ -428,14 +442,14 @@ function sendDeleteAccount(e) {
             console.log(err);
         })
         .then((response) => {
-            if (response.code === 130) {
+            if (Number(response.code) === 130) {
                 console.log('已删除');
                 e.target.textContent = '已删除';
                 setTimeout(() => {
                     localStorage.clear();
                     window.location.href = '/';
                 }, 1000);
-            } else if (response.code === 131) {
+            } else if (Number(response.code) === 131) {
                 console.log('删除失败');
                 e.target.textContent = '删除失败';
             } else {

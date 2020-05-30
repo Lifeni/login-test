@@ -1,8 +1,6 @@
 /**
  * JWT 生成令牌
- *
- * @param string
- * @return string
+ * 有效时间 2 个小时
  */
 
 'use strict';
@@ -13,7 +11,9 @@ const jwt = require('jsonwebtoken');
 const keyPath = './data/jwt.key';
 const key = fs.readFileSync(keyPath).toString();
 
-module.exports = function (uid) {
-    const payload = { uid: uid };
-    return jwt.sign(payload, key, { expiresIn: '1h' });
+module.exports = function (email) {
+    const payload = {
+        email: email,
+    };
+    return jwt.sign(payload, key, { expiresIn: '2h' });
 };

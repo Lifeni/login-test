@@ -202,12 +202,12 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
+    border: solid 1px #e0e0e0;
     border-radius: 2px;
     font-size: 1.5rem;
     font-weight: lighter;
     text-decoration: none;
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
     transition: all 0.2s;
 }
 
