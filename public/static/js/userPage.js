@@ -158,9 +158,11 @@ checkEmail.addEventListener('click', (e) => {
                 checkEmail.textContent = '发送成功';
             } else if (Number(response.code) === 441) {
                 console.log('发送失败');
+                checkEmail.classList.add('error');
                 checkEmail.textContent = '发送失败';
             } else {
                 console.log('发送遇到未知错误');
+                checkEmail.classList.add('error');
                 checkEmail.textContent = '未知错误';
             }
         });

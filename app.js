@@ -132,10 +132,16 @@ app.post('/token', (req, res) => {
 
 app.post('/email', (req, res) => {
     vertifyToken(req.body.token).then((result) => {
-        if (result && sendEmail(req.body.email)) {
-            res.json({ code: 440 });
+        if (result) {
+            sendEmail(req.body.email).then((result2) => {
+                if (result2) {
+                    res.json({ code: 440 });
+                } else {
+                    res.json({ code: 441 });
+                }
+            });
         } else {
-            res.json({ code: 441 });
+            res.json({ code: 241 });
         }
     });
 });
