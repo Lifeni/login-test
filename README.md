@@ -2,7 +2,7 @@
 
 软件质量保证与测试报告相关的被测软件。本仓库地址仅包含前端部分，后端部分没有开源。
 
-程序接口设计在：https://www.showdoc.cc/Lifeni?page_id=4523818236268497。
+程序接口设计在：[ShowDoc](https://www.showdoc.cc/Lifeni?page_id=4523818236268497)。
 
 程序的流程图可以查看 `documents` 文件夹下的 `.drawio` 文件。
 
